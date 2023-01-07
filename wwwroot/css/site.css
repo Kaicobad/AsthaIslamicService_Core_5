@@ -1319,28 +1319,39 @@ body.modal-open {
     font-family: NotoSansBengaliUI-Regular;
 }
 
-@font-face {
+/*@font-face {
     font-family: NotoSansBengaliUI-Bold;
     src: url('fonts/NotoSansBengali/NotoSansBengali-Bold.ttf') format('truetype');
+}*/
+@font-face {
+    font-family: 'notosansbengali-bold';
+    src: url('../fonts/notosansbengali/notosansbengali-bold.ttf') format('truetype');
 }
 
-@font-face {
+/*@font-face {
     font-family: NotoSansBengaliUI-Regular;
     src: url('fonts/NotoSansBengali/NotoSansBengali-Regular.ttf') format('truetype');
-}
-
+}*/
 @font-face {
+    font-family: 'notosansbengali-regular';
+    src: url('../fonts/notosansbengali/notosansbengali-regular.ttf') format('truetype');
+}
+/*@font-face {
     font-family: Telenor;
     src: url('fonts/Telenor/TelenorRegular.woff2.ttf') format('truetype');
-}
+}*/
 /*@font-face {
     font-family: Scheherazade;
     src: url('fonts/ScheherazadeNew_Regular.ttf') format('truetype');
 }*/
 
-@font-face {
+/*@font-face {
     font-family: Al-Majeed;
     src: url('fonts/Al-Majeed-Quranic-Font_shiped.ttf') format('truetype');
+}*/
+@font-face {
+    font-family: 'al-majeed-quranic-font_shiped';
+    src: url('../fonts/almajid/al-majeed-quranic-font_shiped.ttf') format('truetype');
 }
 
 .padding-5 {

@@ -1,0 +1,37 @@
+﻿@model IEnumerable<AsthaIslamicService.Models.NameOfAllahViewModel>
+@{
+    int rCount = 0;
+}
+
+<div class="playlist">
+    @foreach (var item in Model)
+    {
+        rCount = @rCount + 1;
+        <a class="row cstmBoxCard no-style mt-3" asp-controller="quran" asp-action="details" asp-route-id="#" asp-route-name="#" asp-route-num="#" asp-route-play="0">
+            <div class="col-3 pt-2 pb-2">
+                <div class="header-image">
+
+                    <p class="surano tobng"> <span>0</span>@rCount</p>
+                    @*@if (x.SuraNo.Length == 1)
+                {
+                <p class="surano tobng"> <span>0</span>@x.SuraNo</p>
+                }
+                else
+                {
+                <p class="surano tobng">@x.SuraNo</p>
+                }*@
+                </div>
+
+            </div>
+            <div class="col-7 col-middle">
+                <div class="row">
+                    <div class="col-12 padding">@item.Name</div>
+                </div>
+            </div>
+            <div class="col-2 col-middle">
+                <i class="fa fa-play" id="palyicon"></i>
+                <i class="fa fa-pause" id="pauseicon"></i>
+            </div>
+        </a>
+    }
+</div>

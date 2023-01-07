@@ -315,7 +315,7 @@
 
         $.ajax({
             type: "get",
-            url: "/PrayerTime/GetCities",
+            url: "@Url.Action("GetCities", "PrayerTime")",
             async: true,
             success: function (response) {
 
@@ -339,7 +339,7 @@
         $.ajax({
             type: "get",
             async: true,
-            url: "/PrayerTime/GetDefaultTime",
+            url: "@Url.Action("GetDefaultTime", "PrayerTime")",
             success: function (response) {
                 defaultTime = response;
             },
