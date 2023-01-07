@@ -1,0 +1,83 @@
+﻿@using AsthaIslamicService.ViewModels;
+@{
+    var hadithList = (List<HadithViewModel>)ViewBag.hadithList;
+}
+@{
+    int rCount = 0;
+}
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<div class="mt-4">
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        @if (hadithList.Count > 0)
+        {
+
+            foreach (var x in hadithList)
+            {
+                rCount = @rCount + 1;
+
+                <div class="accordion-item cardBoxCustom accordionCL">
+                    <div class="accordion-header">
+                        <div class="accordion-button collapsed row px-2" data-bs-toggle="collapse" data-bs-target="#flush-@x.Id" aria-expanded="false" aria-controls="flush-@x.Id">
+                            <div class="col-3 p-2">
+                                <div class="header-image">
+                                    <p class="surano tobng" style="color:#E0B11A">@rCount</p>
+
+                                </div>
+                            </div>
+                            <div class="col-7 p-0 col-middle">
+                                <div class="row py-2">
+
+                                    <div class="col-12 padding ">@x.Title</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="flush-@x.Id" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body" id="accrd_@x.Id">
+
+                            <div style="padding:10px">
+                                <div>
+                                    <p class="just-line-break">@x.Text</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        }
+
+
+
+    </div>
+</div>
+
+<script>
+    $('.tobng').each(function () {
+
+        var currentElement = $(this);
+
+        var value = currentElement.html().trim(); // if it is an input/select/textarea field
+        currentElement.html(convertToBanglanumber(value));
+        // TODO: do something with the value
+    });
+
+
+
+    function convertToBanglanumber(input) {
+
+        var finalEnlishToBanglaNumber =
+            { '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪', '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯' };
+        var retStr = input;
+        for (var x in finalEnlishToBanglaNumber) {
+            retStr = retStr.replace(new RegExp(x, 'g'), finalEnlishToBanglaNumber[x]);
+        }
+
+
+        retStr = retStr.replace("AM", "এএম");
+        retStr = retStr.replace("PM", "পিএম");
+        return retStr;
+
+
+    }
+</script>

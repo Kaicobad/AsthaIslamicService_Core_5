@@ -1,0 +1,382 @@
+﻿@{
+    ViewData["Title"] = "রোজা";
+    Layout = "~/Views/Shared/_LayoutIslamicLife.cshtml";
+}
+
+<style>
+    p {
+        margin-bottom: 3px;
+    }
+
+    .todays-wrap {
+    }
+
+
+    .todays-status {
+        background-color: #ffffff;
+        padding: 8px 0px 8px 0px;
+        border-radius: 15px;
+        margin-top: 30px;
+    }
+
+    .today-mid-wrap {
+        background: url("/img/Ramadan/round_art.png");
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        text-align: center;
+        height: 65px;
+        margin: auto;
+    }
+
+    .time-title2 {
+        color: white;
+        font-size: 14px;
+    }
+
+    .time-titleInside {
+        color: white;
+        font-size: 16px;
+    }
+
+    .time-title {
+        margin: auto;
+        font-size: 11px;
+        position: relative;
+        top: 40%;
+    }
+
+    thead > tr > th {
+        font-size: 11px;
+        font-weight: normal;
+        padding: 0.5rem 0rem;
+    }
+
+    tr > td {
+        font-size: 12px;
+    }
+
+    .selectOPtion {
+        height: 40px;
+        border-radius: 4px;
+        padding: 5px 15px 0px 17px;
+        border: white;
+        color: black;
+        outline: none;
+        width: 100%;
+    }
+
+    @@media only screen and (max-width: 350px) {
+        .time-title {
+            font-size: 11px;
+        }
+
+        .time-title2 {
+            font-size: 12px;
+        }
+
+        .time-titleInside {
+            font-size: 12px;
+        }
+    }
+
+    .borderBoxCard {
+        padding: 10px;
+        border: 1px solid #129AE8;
+        border-radius: 10px;
+        margin-left: 5px;
+        width: 90%;
+        text-align: center;
+        background-color: white;
+    }
+
+    .rType {
+        margin: auto;
+        font-size: 13px;
+    }
+
+    .table > :not(:first-child) {
+        border-top: 1px solid currentColor;
+    }
+
+    .rmheader {
+        padding: 20px;
+        background-color: #129AE8;
+        border-radius: 8px;
+    }
+</style>
+
+<nav class="navbar navbar-default row mb-3" role="navigation">
+    <div class="col-1 text-end p-0" style="margin-top:4px">
+        <a asp-controller="Landing" asp-action="index"> <i class="fa fa-angle-left fa_custom nav-fa-size"></i></a>
+    </div>
+    <div class="col-10">
+        <div class="m-2 text-center">
+            <img class='child inline-block-child' src="~/img/Header/roja.svg" style="height:25px" />
+            <p class='child inline-block-child' style="margin-left: 5px;font-family: NotoSansBengaliUI-Bold; font-size:18px;color:#ffffff">রোজার সময়সূচী</p>
+        </div>
+    </div>
+    <div class="col-1">
+    </div>
+</nav>
+
+<div class="col-12 rmheader">
+    <div class="row">
+        <input type="text" id="todaysDate" style="display:none" value="@ViewBag.CurrentDate" />
+        <p class="text-center text-white tobng" style="font-size: 14px;">আজ @ViewBag.CurrentDate </p>
+
+    </div>
+
+    <div class="row" style="margin-top:30px ">
+        <div class="col-5 p-0" style="margin: auto;text-align:center">
+            <p class="time-title2">সেহরীর শেষ সময়</p>
+            <p class="time-titleInside">রাত <span id="sehriTime" class="time-titleInside tobng"></span></p>
+        </div>
+        <div class="col-2" style="text-align:center">
+            <div class="vr" style="color: white;margin: auto;height: 100%;"></div>
+        </div>
+        <div class="col-5 p-0" style="margin: auto;text-align:center">
+            <p class="time-title2">ইফতারের সময়</p>
+            <p class="time-titleInside">সন্ধ্যা  <span id="iftarTime" class="time-titleInside tobng"></span></p>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-12 p-0" style="margin-top: 8px; margin-bottom: 15px;">
+    <div class="col-xs-12 padding" style="background-color: #ffffff; border-radius: 10px;">
+        <div class="col-xs-12 padding" style="background-color:#129AE8; height: 50px; line-height: 52px; text-align: center; color: #ffffff; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+            সেহরি ও ইফতারের সময়সূচি
+        </div>
+        <div class="row">
+            <table class="table table-border" style="margin-top:20px">
+
+                <thead>
+                    <tr style="color:#1bb1af;vertical-align: middle;">
+                        <th style="font-size:13px;color:#5c5c5c">তারিখ</th>
+                        <th style="font-size:13px;color:#5c5c5c">দিবস</th>
+                        <th style="font-size:13px;color:#5c5c5c">সেহরির শেষ সময়</th>
+                        <th style="font-size:13px;color:#5c5c5c">ইফতারের সময়</th>
+                    </tr>
+                </thead>
+                <tbody id="tbldata" style="background-color:white">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-12 btSection p-0" style=" margin-bottom: 15px; text-align: center;display:none">
+    <div class="col-xs-12" style="background-color: #ffffff; border-radius: 10px;">
+        <div class="col-xs-12 padding" style="background-color:#129AE8; height: 50px; line-height: 52px; text-align: center; color: #ffffff; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+            দোয়া সমূহ
+        </div>
+
+        <div style="padding:12px">
+            <div class="col-xs-12 padding" style="margin-top: 15px; position: relative">
+                <div class="col-xs-12 padding">
+                    <img class="img-responsive" src="~/img/Ramadan/ttl_shape.png" style="margin: auto;">
+                </div>
+                <div class="col-xs-12 padding" style="text-align: center; position: absolute; top: 50%; left: 50%; transform: translateX(-50%) translateY(-50%) ">
+                    রোজার নিয়ত
+                </div>
+            </div>
+            <div class="col-xs-12" style="margin-top: 10px;    font-weight: bold;">
+                نويت ان اصوم غدا من شهر رمضان المبارك فرضا لك ياالله فتقبل منى انك انت السميع العليم.
+            </div>
+            <div class="col-xs-12" style="margin-top: 10px">
+                নাওয়াইতু আন আছুমা গাদাম মিন শাহরি রামাদ্বনাল মুবারাকি ফারদ্বাল্লাকা ইয়া আল্লাহ ফাতাক্বাববাল মিন্নী ইন্নাকা আনতাস সামীয়ু'ল আ'লীম।
+            </div>
+
+            <div class="col-xs-12 padding" style="margin-top: 15px;position: relative">
+                <div class="col-xs-12 padding">
+                    <img class="img-responsive" src="~/img/Ramadan/ttl_shape.png" style="margin: auto;">
+                </div>
+                <div class="col-xs-12 padding" style="text-align: center; position: absolute; top: 50%; left: 50%; transform: translateX(-50%) translateY(-50%) ">
+                    ইফতারের দোয়া
+                </div>
+            </div>
+            <div class="col-xs-12" style="margin-top: 10px;    font-weight: bold;">
+                اللهم لك صمت و على رزقك افطرت.
+            </div>
+            <div class="col-xs-12" style="margin-top: 10px; margin-bottom: 15px">
+                আল্লাহুম্মা সুমতু লাকা, ওয়া তাওআক্কালতু আ'লা রিঝক্বিকা, ওয়া আফতারতু বিরাহমাতিকা ইয়া আরহামার রহিমীন।
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+<div class="col-12 btSection p-0" style="top: 15px; margin-bottom: 15px; text-align: left;display:none">
+    <div class="col-xs-12 padding" style="background-color: #ffffff; margin-bottom: 15px; border-radius: 10px;">
+        <div class="col-xs-12 padding" style="background-color: #129AE8; height: 50px; line-height: 52px; text-align: center; color: #ffffff; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+            রোজার নিয়ম কানুন
+        </div>
+        <div class="col-xs-12" style="margin-top: 15px; margin-bottom: 15px;padding-left: 20px;padding-right: 15px;font-size:14px">
+            <span style="color:#129AE8;">যে সমস্ত কারণে রোযা শুরু করার পর ভেঙ্গে ফেলার অনুমতি রয়েছে, তবে পরে ক্বাযা আদায় করতে হয়</span>
+            <br>
+
+            ১: সফর অবস্থায় খুব কষ্ট হলে।<br>
+
+            ২: অসুস্হ অবস্থায় ঔষুধ সেবন না করলে প্রাণ নাশের আশংকা হলে।<br>
+
+            ৩: দুগ্ধ দায়িনী স্ত্রীলোকের নিজের বা দুগ্ধ শিশুর জীবনের ব্যাপারে আশংকা হলে।<br>
+
+            ৪: বৃদ্ধাবস্থায় রোযা রাখার কারনে মারাত্মক দুর্বল হয়ে জীবনের ব্যাপারে আশংকা হলে।<br>
+            ৫: আল্লাহর রাস্তায় জিহাদের জন্য।<br>
+
+            ৬: বেহুঁশ বা পাগল হয়ে গেলে।<br>
+
+            ৭: রোগ বেড়ে যাওয়ার বা নতুন কোন রোগ সৃষ্টি হওয়ার আশংকা হলে । ( তবে তা দ্বীনদার, পরযেগার, অভিজ্ঞ চিকিৎসকের পরামর্শ অনুযায়ী হতে হবে )<br>
+
+            ৮: গর্ভ অবস্থায় নিজের বা সন্তানের প্রাণ নাশের আশংকা হলে।<br>
+
+            ৯: এমন পিপাসা বা ক্ষুধা যাতে প্রাণের আশংকা হয়।
+            <br>
+
+            ( কেহ যদি অন্যকে দিয়ে কাজ করাতে পারে, বা জীবিকা অর্জনের জন্য অন্য কোন কাজি করার সুযোগ থাকা সত্ত্বেও টাকার লোভে এমন কাজ করল, যার কারনে ক্ষধা বা পিপাসায় আক্রান্ত হল, তাহলে তাঁর রোজা ছাড়ার অনুমতি নাই )<br>
+
+            <br>
+
+            <span style="color: #129AE8;">যে ৫ দিন রোযা রাখা হারাম</span>
+            <br>
+
+            ১: ঈদুল ফিতরের দিন
+            <br>
+
+            ২: ঈদুল আযহার দিন<br>
+
+            ৩: ১১, ১২ ও ১৩ই জিলহজ্ব অর্থাৎ ঈদুল আযহার পরের তিন দিন, এই মোট ৫ দিন রোযা রাখা হারাম।<br>
+
+            <br>
+            <span style="color: #129AE8;">রোযা ভঙ্গের কারণ </span>
+            <br>
+
+            যে সব কারনে রোযা ভেঙ্গে যায় এবং একটি রোযার পরিবর্তে একটি রোযা কাজা করা ওয়াজিব হয়ঃ<br>
+
+
+
+            ১: কানে বা নাকে ঔষুধ দিলে।<br>
+
+            ২: ইচ্ছাকৃতভাবে মুখভরে বমি করলে বা অল্প বমি আসার পর তা গিলে ফেললে।<br>
+
+            ৩: কুলি করার সময় অনিচ্ছা বশত কন্ঠনালীতে পানি চলে গেলে।<br>
+
+            ৪: স্ত্রী বা কোন নারীকে শুধু স্পর্শ প্রভৃতি করার কারনেই বীর্যপাত হয়ে গেলে।<br>
+
+            ৫: এমন কোন জিনিস খেলে যা খাদ্য নয় যেমন : কাঠ, লোহা, মাটি, কয়লা ইত্যাদি।<br>
+
+            ৬: বিড়ি সিগারেট বা হুক্কা সেবন করলে।<br>
+
+            ৭: আগরবাতি প্রভৃতির ধোয়া ইচ্ছাকৃত ভাবে নাকে বা কন্ঠনালীতে পৌছালে।<br>
+
+            ৮: ভুলে পানাহার করার পর রোযা ভেঙ্গে গেছে মনে করে কোন কিছু পানাহার করলে।<br>
+
+            ৯: রাত আছে মনে করে সুবহে সাদিকের পরে কিছু খেলে।<br>
+
+            ১০: ইফতারীর সময়ের পূর্বে সময় হয়ে গেছে মনে করে ইফতারী করলে বা কিছু খেলে।<br>
+
+            ১১: দুপুরের পরে রোযার নিয়ত করলে।<br>
+
+            ১২: দাঁত দিয়ে রক্ত বের হলে তা থুথুর চেয়ে পরিমানে যদি বেশি হয় এবং কন্ঠনালীতে চলে যায়।<br>
+
+            ১৩: কেহ জোর পূর্বক রোযাদারের মুখে কিছু দিলে এবং তা কন্ঠনালীতে চলে গেলে।<br>
+
+            ১৪: দাঁত কোন খাদ্য টুকরো আটকে ছিল, তা সুবহে সাদেকের পর জিহ্বা অথবা আঙ্গুলি দ্বারা বের করে গিলে ফেললে। ( তবে যদি ছুলা বুটের চেয়ে ছোট হয় এবং মুখের ভিতর হতে বের না করে তাহলে রোযা মাকরুহ হবে ভাঙ্গবে না )<br>
+
+            ১৫: হস্তমৈথুন করে বীর্যপাত ঘটালে।<br>
+
+            ১৬: পেশাব বা পায়খানার রাস্তায় ঔষুধ, পানি, তৈল বা ভিজা আঙ্গুল প্রবেশ করালে। অথবা শুকনো আঙ্গুল পুরোটা প্রবেশ করিয়ে পুরোটা বা টিছুটা বের করে আবার প্রবেশ করালে।<br>
+
+            ১৭: মুখে পান রেখে ঘুমিয়ে গেলে এবং এ অবস্থায় সু্বহে সাদিক হয়ে গেলে।<br>
+
+            ১৮: নস্যি গ্রহন করলে বা কানে তেল ঢাললে।<br>
+
+            ১৯: রোযার নিয়ত ব্যতীত রোযা রাখলে।<br>
+
+            ২০: স্ত্রীর বেহুশ, অচেতন বা ঘুমন্ত অবস্থায় তাঁর সাথে সহবাস করলে স্ত্রীর উপর শুধু কাযা ওয়াজিব হবে।<br>
+
+            ২১: নফল রোযা রেখে ভেঙ্গে ফেললে।<br>
+
+            ২২: এক দেশে রোযা শুরু করে অন্যদেশে চলে গেলে সেখানে যদি নিজের দেশের তুলনায় আগে ঈদ হয়ে তাহলে নিজের দেশের হিসাবে যে কয়টা রোযা কম হবে তা কাযা করতে হবে। আর যদি বেড়ে যায় তাহলে সে বেড়ে যাওয়া রোযা রাখতে হবে।<br>
+
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        LoadDiveWiseTiming('Dhaka');
+        $('.tobng').each(function () {
+        var currentElement = $(this);
+        var value = currentElement.html().trim(); // if it is an input/select/textarea field
+        currentElement.html(convertToBanglanumber(value));
+    });
+    });
+
+    function convertToBanglanumber(input) {
+
+        var finalEnlishToBanglaNumber =
+            { '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪', '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯' };
+        var retStr = input;
+        for (var x in finalEnlishToBanglaNumber) {
+            retStr = retStr.replace(new RegExp(x, 'g'), finalEnlishToBanglaNumber[x]);
+        }
+
+
+        retStr = retStr.replace("AM", "");
+        retStr = retStr.replace("PM", "");
+        return retStr;
+
+
+    }
+    function LoadDiveWiseTiming(strDiv) {
+
+        $.ajax({
+            type: "GET",
+            async: true,
+            //url: "ramadan/GetRamadanTimingV2",
+            url: "@Url.Action("GetRamadanTimingV2", "Ramadan")",
+            dataType: "html",
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $('#tbldata').empty();
+                $('#tbldata').html(data);
+
+
+                $('.tobng').each(function () {
+
+                    var currentElement = $(this);
+
+                    var value = currentElement.html().trim(); // if it is an input/select/textarea field
+                    currentElement.html(convertToBanglanumber(value));
+                    // TODO: do something with the value
+                });
+            },
+            complete:function(){
+                getTodaysValue();
+
+            }
+        });
+    }
+
+      function getTodaysValue() {
+            $('#sehriTime').text($('#1_sheri').html());
+             $('#iftarTime').text($('#1_iftar').html());
+                $('#1_tr').css("background-color","#129AE8");
+                $('#1_tr').css("color","white");
+                  $('.btSection').show();
+
+    }
+
+
+
+</script>

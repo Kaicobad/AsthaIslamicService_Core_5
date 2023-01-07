@@ -1,0 +1,33 @@
+﻿@model IEnumerable<AsthaIslamicService.Models.IslamicNameModel>
+@{
+    int count = 1;
+}
+<style>
+
+    .rownow {
+        background-color: white;
+        padding: 15px 0px 15px 15px;
+        border-radius: 5px;
+        margin-top: 8px !important;
+    }
+</style>
+<div class="container-fluid">
+    @foreach (var item in Model)
+    {
+
+        <div class="row rownow">
+            <div class="col-6" style="margin:auto">
+                <p class="tobng" style="color: #0A77B5;margin:auto;display:inline;">@count</p>
+                <h4 style="font-size: 13px; font-weight:bold;margin:auto;padding-left:12px; display:inline;">@item.Name</h4>
+            </div>
+            <div class="col-6">
+                <p style="color: gray;font-size: 12px;margin:auto;display:inline;">অর্থ : </p>
+                <h4 style="font-size: 12px;margin:auto;padding-left:5px; display:inline;">@item.Meaning</h4>
+            </div>
+        </div>
+        count++;
+    }
+
+</div>
+
+

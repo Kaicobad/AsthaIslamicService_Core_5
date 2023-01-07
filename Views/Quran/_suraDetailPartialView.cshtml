@@ -1,0 +1,155 @@
+﻿
+@{
+    var suraDetail = (SurahModel_Quran)ViewBag.suraDetail;
+    var suraList = (List<SurahModel_Quran>)ViewBag.SuraList;
+
+}
+
+
+<style>
+    .ayat-arabic {
+        font-family: Al-Majeed;
+    }
+
+
+    input,
+    output {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 1em;
+        font-family: Arial, sans-serif;
+    }
+
+    output {
+        background: #ff4500;
+        padding: 5px 16px;
+        border-radius: 3px;
+        color: #fff;
+    }
+
+    input[type="number"] {
+        width: 40px;
+        padding: 4px 5px;
+        border: 1px solid #bbb;
+        border-radius: 3px;
+    }
+
+
+
+    input[type="range"] {
+        -webkit-appearance: none;
+        margin-right: 15px;
+        height: 7px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 5px;
+        /*background-image: linear-gradient(#0A77B5, #96b6c9);*/
+        border: 1px solid #0A77B5;
+        background-repeat: no-repeat;
+    }
+
+    
+
+  
+
+</style>
+<input value="@ViewBag.play" id="playMedia" style="display:none">
+<input value="@suraDetail.SuraNo" id="suraId" style="display:none">
+
+
+
+
+
+<div class="px-2" style="padding-bottom:55px">
+    @if (suraList.Count > 0)
+    {
+        foreach (var item in suraList)
+        {
+            var ayat = item.Ayat.Contains("﴾") ? item.Ayat.Replace("﴾", "") : item.Ayat;
+
+            <div class="row ">
+                <div class="float-right col-12 text-right ayat-arabic" style="color:#0A77B5;padding-bottom: 8px;font-weight:500;font-size:22px ">
+                    @ayat
+                </div>
+            </div>
+
+            <div class="row">
+                <p class="text-left ayat-meaning">@item.Meaning</p>
+            </div>
+
+
+        }
+    }
+
+
+
+
+</div>
+<div class="mini-player" id="mini">
+    <div class="row mt-2 pb-0 container" style="margin-left:10px">
+        <div class="col-2 p-0">
+            <div class="header-image">
+
+
+                @if (suraDetail.SuraNo.Length == 1)
+                {
+                    <p class="surano tobng"> <span>0</span>@suraDetail.SuraNo</p>
+                }
+                else
+                {
+                    <p class="surano tobng">@suraDetail.SuraNo</p>
+                }
+            </div>
+
+
+        </div>
+        <div class="col-9 p-0" style="margin:auto">
+            <div class="row">
+                <div class="col-12 p-0" style="margin:auto">
+                    <div class="col-12 padding">@suraDetail.SuraName</div>
+                    <div class="col-12 padding" style="font-size: 11px">আয়াত সংখ্যা - @suraDetail.AyatNo</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row m-0 ">
+
+        @*<div class="col-1 p-0" style="margin:auto">
+        <img src="~/img/Quran/mini_player_photo.svg" class="img-fluid" />
+        </div>*@
+        <div class="col-8 no-gutters mx-auto p-0">
+            <input type="range" min="0" style="width: 100%; margin-top: 10px; margin-left: 21px;" max="100" value="0" class="slider" onchange="Seek(); rangenumber.value=value" id="player" oninput="rangenumber.value=value">
+            @*<h7 class="m-0 sName" id="sName">@suraDetail.SuraName</h7>
+            <p class="m-0 tobng" > আয়াত @suraDetail.AyatNo</p>*@
+
+        </div>
+
+        <div class="col-4 p-0 mt-0 justify-content-end text-right" style="margin:auto">
+
+
+            <a class="btn nostyle p-0 mt-1" onclick="goPrev()">
+                <i class="fas fa-step-backward"></i>
+            </a>
+            <button id="playBottom" class="btn-nostyle" onclick="play('@suraDetail.SuraNo')">
+                @*<i class="fas fa-play" ></i>*@
+                <img src="~/images/quran/play.svg" id="play-img" width="30" style="height: 13px;" />
+                <img src="~/images/quran/stop.svg" id="pause-img" style="display:none;height: 13px;" width="30" />
+            </button>
+            <a class="btn nostyle p-0 mt-1" onclick="goNext()">
+                <i class="fas fa-step-forward"></i>
+            </a>
+        </div>
+
+        @*<div class="row" style="width:100%;padding:0px; margin-top:10px">
+        <input type="range" min="0" max="100" value="0" class="slider" onchange="Seek()" id="player">
+        </div>*@
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+
+</script>

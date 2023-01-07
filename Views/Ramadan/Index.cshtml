@@ -1,0 +1,330 @@
+﻿@{
+    ViewData["Title"] = "রোজা";
+    Layout = "~/Views/Shared/_LayoutIslamicLife.cshtml";
+}
+
+<style>
+    p {
+        margin-bottom: 3px;
+    }
+
+    .todays-wrap {
+    }
+
+
+    .todays-status {
+        background-color: #ffffff;
+        padding: 8px 0px 8px 0px;
+        border-radius: 15px;
+        margin-top: 30px;
+    }
+
+    .today-mid-wrap {
+        /* background: url("/img/Ramadan/round_art.png");*/
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        text-align: center;
+        height: 65px;
+        margin: auto;
+    }
+
+    .time-title2 {
+        color: white;
+        font-size: 14px;
+    }
+
+    .time-titleInside {
+        color: white;
+        font-size: 16px;
+    }
+
+    .time-title {
+        margin: auto;
+        font-size: 11px;
+        position: relative;
+        top: 40%;
+    }
+
+    thead > tr > th {
+        font-size: 11px;
+        font-weight: normal;
+        padding: 0.5rem 0rem;
+    }
+
+    tr > td {
+        font-size: 12px;
+    }
+
+    .selectOPtion {
+        height: 40px;
+        border-radius: 4px;
+        padding: 5px 15px 0px 17px;
+        border: white;
+        color: black;
+        outline: none;
+        width: 100%;
+    }
+
+    @@media only screen and (max-width: 350px) {
+        .time-title {
+            font-size: 11px;
+        }
+
+        .time-title2 {
+            font-size: 12px;
+        }
+
+        .time-titleInside {
+            font-size: 12px;
+        }
+    }
+
+    .borderBoxCard {
+        padding: 10px;
+        border: 1px solid #129AE8;
+        border-radius: 10px;
+        margin-left: 5px;
+        width: 90%;
+        text-align: center;
+        background-color: white;
+    }
+
+    .rType {
+        margin: auto;
+        font-size: 13px;
+    }
+
+    .table > :not(:first-child) {
+        border-top: 1px solid currentColor;
+    }
+
+    .rmheader {
+        padding: 20px;
+        background-color: #0A77B5;
+        border-radius: 8px;
+    }
+</style>
+
+<nav class="navbar navbar-light bg-light">
+    <div class="col-1 text-end">
+        <a asp-action="Index" asp-controller="Landing" class="navbar-brand ">
+
+            <i class="fa fa-angle-left "></i>
+        </a>
+    </div>
+    <div class="col-10 ">
+        <h5 class="m-0 text-center">
+            রোজার সময়সূচী
+        </h5>
+    </div>
+    <div class="col-1">
+    </div>
+</nav>
+
+
+<div calss="hd" style="padding: 12px;">
+    <div class="col-12 rmheader">
+        <div class="row">
+            <input type="text" id="todaysDate" style="display:none" value="@ViewBag.CurrentDate" />
+            <p class="text-center text-white tobng" style="font-size: 14px;">আজ @ViewBag.CurrentDate </p>
+
+        </div>
+        <div class="row" style="margin-top:30px ">
+            <div class="col-5 p-0" style="margin: auto;text-align:center">
+                <p class="time-title2">সেহরীর শেষ সময়</p>
+                <p class="time-titleInside">রাত <span id="sehriTime" class="time-titleInside tobng">@ViewBag.fazar</span></p>
+            </div>
+            <div class="col-2" style="text-align:center">
+                <div class="vr" style="color: white;margin: auto;height: 100%;"><p style="font-size:50px;">|</p></div>
+            </div>
+            <div class="col-5 p-0" style="margin: auto;text-align:center">
+                <p class="time-title2">ইফতারের সময়</p>
+                <p class="time-titleInside">সন্ধ্যা  <span id="iftarTime" class="time-titleInside tobng">@ViewBag.sunset</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row todays-wrap">
+    <div class="col-12 text-center" style="margin-top:12px">
+        <select id="divValues" class="selectOPtion" onchange="LoadDiveWiseTiming(this.value)">
+            <option value="Dhaka">ঢাকা</option>
+            <option value="Chattogram">চট্টগ্রাম</option>
+            <option value="Barisal">বরিশাল</option>
+            <option value="Khulna">খুলনা</option>
+            <option value="Rajshahi">রাজশাহী</option>
+            <option value="Sylhet">সিলেট</option>
+            <option value="Rangpur">রংপুর</option>
+            <option value="Mymensingh">ময়মনসিংহ</option>
+        </select>
+
+    </div>
+</div>
+
+
+<div class="col-12" style="margin-top: 8px; margin-bottom: 15px; padding:12px">
+    <div class="col-xs-12 padding" style="background-color: #ffffff; border-radius: 10px;">
+        <div class="col-xs-12 padding" style="background-color:#E0B11A; height: 50px; line-height: 52px; text-align: center; color: #ffffff; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+            সেহরি ও ইফতারের সময়সূচি
+        </div>
+
+        <div class="row" style="margin-left:10px;margin-right:10px;margin-top:10px;">
+            <div class="col-4 p-0">
+                <div class="borderBoxCard" id="rahmatCL" onclick="ToggleClick('rahmatCL','rahmatTxt','rahmatHV')">
+                    <p class="rType" id="rahmatTxt">রহমত</p>
+
+                </div>
+            </div>
+            <div class="col-4 p-0">
+                <div class="borderBoxCard" id="magfiratCL" onclick="ToggleClick('magfiratCL','magfiratTxt','magfiratHV')">
+                    <p class="rType" id="magfiratTxt">মাগফিরাত</p>
+
+                </div>
+            </div>
+            <div class="col-4 p-0">
+                <div class="borderBoxCard" id="najatCL" onclick="ToggleClick('najatCL','najatTxt','najatHV')">
+                    <p class="rType" id="najatTxt">নাজাত </p>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table table-border" style="margin-top:20px">
+
+                <thead>
+                    <tr style="color:#1bb1af;vertical-align: middle;">
+                        <th style="font-size:13px;color:#5c5c5c">রমজান</th>
+                        <th style="font-size:13px;color:#5c5c5c">তারিখ</th>
+                        <th style="font-size:13px;color:#5c5c5c">সেহরির শেষ সময়</th>
+                        <th style="font-size:13px;color:#5c5c5c">ইফতারের সময়</th>
+                    </tr>
+                </thead>
+                <tbody id="tbldata" style="background-color:white">
+                </tbody>
+
+
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    $(document).ready(function () {
+
+        LoadDiveWiseTiming('Dhaka');
+        $('.tobng').each(function () {
+            var currentElement = $(this);
+            var value = currentElement.html().trim(); // if it is an input/select/textarea field
+            currentElement.html(convertToBanglanumber(value));
+        });
+    });
+
+    function convertToBanglanumber(input) {
+
+        var finalEnlishToBanglaNumber =
+            { '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪', '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯' };
+        var retStr = input;
+        for (var x in finalEnlishToBanglaNumber) {
+            retStr = retStr.replace(new RegExp(x, 'g'), finalEnlishToBanglaNumber[x]);
+        }
+
+
+        //retStr = retStr.replace("AM", "এএম");
+        //retStr = retStr.replace("PM", "পিএম");
+        return retStr;
+
+
+    }
+    function LoadDiveWiseTiming(strDiv) {
+
+        $.ajax({
+            type: "GET",
+            async: false,
+            //url: "ramadan/GetDivisionWise",
+            url: "@Url.Action("GetDivisionWise", "Ramadan")",
+            data: {
+                division: strDiv
+            },
+            dataType: "html",
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $('#tbldata').empty();
+                $('#tbldata').html(data);
+
+
+                $('.tobng').each(function () {
+
+                    var currentElement = $(this);
+
+                    var value = currentElement.html().trim(); // if it is an input/select/textarea field
+                    currentElement.html(convertToBanglanumber(value));
+                    // TODO: do something with the value
+                });
+                getTodaysValue();
+            },
+            complete: function () {
+
+            }
+        });
+    }
+
+    function getTodaysValue() {
+
+
+        var today = $('#todaysDate').val();
+        var split = today.split(',');
+
+        $('.date').each(function () {
+
+            var data = $(this).attr('id');
+
+            var date = $('#' + data + '_ttt').html();
+
+            if (date == today) {
+                $('#sehriTime').text($('#' + data + "_sehri").html());
+                $('#iftarTime').text($('#' + data + "_ifter").html());
+
+                if (parseInt(data) > 10 && parseInt(data) <= 20) {
+                    ToggleClick('magfiratCL', 'magfiratTxt', 'magfiratHV');
+                }
+                else if (parseInt(data) > 20) {
+                    ToggleClick('najatCL', 'najatTxt', 'najatHV');
+                }
+                return;
+                /* $('#' + data + "").html();*/
+            }
+
+        });
+    }
+
+
+    function ToggleClick(strV, txtV, trClassName) {
+
+        $('#rahmatCL').css("background-color", "white");
+        $('#magfiratCL').css("background-color", "white");
+        $('#najatCL').css("background-color", "white");
+
+        $('#rahmatTxt').css("color", "black");
+        $('#magfiratTxt').css("color", "black");
+        $('#najatTxt').css("color", "black");
+
+        $('.rahmatHV').hide();
+        $('.magfiratHV').hide();
+        $('.najatHV').hide();
+
+
+
+        $('#' + strV).css("background-color", "#0A77B5");
+        $('#' + txtV).css("color", "white");
+        $('.' + trClassName).show();
+
+        //bottom dua section
+        $('.btSection').show();
+
+    }
+</script>

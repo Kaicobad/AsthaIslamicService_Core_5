@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewData["Title"] = " ইসলামিক নাম";
+   Layout = "~/Views/Shared/_LayoutIslamicLife.cshtml";
+}
+<style>
+    .but-border{
+        border-bottom: 2px solid #0A77B5;
+    }
+</style>
+<nav class="navbar navbar-light bg-light">
+    <div class="col-1 text-end">
+        <a asp-action="Index" asp-controller="Landing" class="navbar-brand">
+            <i class="fa fa-angle-left"></i>
+        </a>
+    </div>
+    <div class="col-10 ">
+        <h5 class="m-0 text-center">
+            ইসলামিক নাম
+        </h5>
+    </div>
+    <div class="col-1">
+    </div>
+</nav>
+
+
+<div class="row" style="background-color:#ffffff">
+    <div class="col-6 text-center">
+        <a onclick="GetBoyName()" class="but-border btn btn-block"  style="width:100%" id="boybtn"> ছেলে</a>
+    </div>
+    <div class="col-6 text-center">
+        <a onclick="GetGirlName()" id="girlbtn" class="but-border btn btn-block"  style="width:100%"> মেয়ে</a>
+    </div>
+
+</div>
+<div  id="male" style="display:none">
+   
+    <div id="maleName" >
+
+    </div>
+</div>
+<div  id="female" style="display:none">
+    <div id="femaleName">
+
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        GetBoyName();
+      
+    });
+
+    function GetBoyName() {
+       
+        LoadName('male');
+        $('#male').show();
+        $('#female').hide();
+        $('#girlbtn').removeClass('but-border')
+        $('#boybtn').addClass('but-border')
+    }
+    function GetGirlName() {
+        LoadName('female');
+        $('#male').hide();
+        $('#female').show();
+        $('#girlbtn').addClass('but-border')
+        $('#boybtn').removeClass('but-border')
+    }
+
+    function LoadName( what ) {
+        $.ajax({
+            type: "GET",
+            async: true,
+            data: { type: what },
+            url:"@Url.Action("GetNames", "IslamicName")",
+            dataType: "html",
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (what == 'male') {
+                    $('#maleName').empty();
+                    $('#maleName').html(data);
+                }
+                if (what == 'female') {
+                    $('#femaleName').empty();
+                    $('#femaleName').html(data);
+                }
+
+                $('.tobng').each(function () {
+
+                    var currentElement = $(this);
+
+                    var value = currentElement.html().trim(); // if it is an input/select/textarea field
+                    currentElement.html(convertToBanglanumber(value));
+                    // TODO: do something with the value
+                });
+
+
+            }
+        });
+
+
+    }
+</script>

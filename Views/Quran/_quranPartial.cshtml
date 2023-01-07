@@ -1,0 +1,39 @@
+﻿@{
+    var suraList = (List<SurahModel_Quran>)ViewBag.SuraList;
+}
+<style>
+    a{
+        background:white
+    }
+</style>
+
+@foreach (var x in suraList)
+{
+    <a class="row cstmBoxCard no-style mt-3" asp-controller="quran" asp-action="details" asp-route-id="@x.SuraNo" asp-route-name="@x.SuraName" asp-route-num="@x.AyatNo" asp-route-play="0">
+        <div class="col-3 pt-2 pb-2">
+            <div class="header-image">
+
+
+                @if (x.SuraNo.Length == 1)
+                {
+                    <p class="surano tobng"> <span>0</span>@x.SuraNo</p>
+                }
+                else
+                {
+                    <p class="surano tobng">@x.SuraNo</p>
+                }
+            </div>
+
+        </div>
+        <div class="col-7 col-middle">
+            <div class="row">
+                <div class="col-12 padding">@x.SuraName</div>
+                <div class="col-12 padding" style="font-size: 11px">আয়াত সংখ্যা - @x.AyatNo</div>
+            </div>
+        </div>
+        <div class="col-2 col-middle">
+            <i class="fa fa-angle-right more"></i>
+        </div>
+
+    </a>
+}

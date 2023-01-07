@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+
+
+        .bg-light {
+            background-color: white !important;
+            padding: 20px;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: #C7F4F4;
+        }
+    </style>
+</head>
+<body>
+    <div class="">
+        <main role="main" class="pb-3">
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="border-top footer text-muted">
+        <div class="container" style="margin: auto; width: 100%;">
+            <div class="footer" style="text-align:center;">
+                <img src="~/images/footer/footer.svg" style="width:100%" />
+            </div>
+            @*<div class="row">
+            <div class="col">
+            <div class="h-100 d-flex align-items-center justify-content-center" style="text-align:center;">
+            <img src="~/images/footer/footer.svg" style="width:100%" />
+            </div>
+
+            <p>
+            <div class ="">
+            ASTHA ISLAMIC
+            </div>
+            <div class="">
+            Service
+            </div>
+            </p>
+            </div>
+            <div class="col">
+            <p>
+            Poered by gakk media
+            </p>
+            </div>
+            </div>*@
+        </div>
+        @*<nav class="navbar fixed-bottom navbar-light bg-light">
+        <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+        <div class="col">
+        <p>
+        ASTHA ISLAMIC Service
+        </p>
+        </div>
+        <div class="col">
+        <p>
+        Poered by gakk media
+        </p>
+        </div>
+        </a>
+        </div>
+        </nav>*@
+    </footer>
+    <script>
+
+        function convertToBanglanumber(input) {
+
+            var finalEnlishToBanglaNumber =
+                { '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪', '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯' };
+            var retStr = input;
+            for (var x in finalEnlishToBanglaNumber) {
+                retStr = retStr.replace(new RegExp(x, 'g'), finalEnlishToBanglaNumber[x]);
+            }
+
+
+            retStr = retStr.replace("AM", "");
+            retStr = retStr.replace("PM", "");
+            return retStr;
+
+
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

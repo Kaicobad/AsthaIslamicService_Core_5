@@ -1,0 +1,293 @@
+﻿@{
+    var suraDetail = (SurahModel_Quran)ViewBag.suraDetail;
+    var suraList = (List<SurahModel_Quran>)ViewBag.SuraList;
+
+}
+@{
+    ViewData["Title"] = @ViewBag.title;
+    Layout = "~/Views/Shared/_LayoutIslamicLife.cshtml";
+}
+
+
+<style>
+
+
+
+    .ayat-meaning {
+        font-size: 14px;
+    }
+
+    #myBar {
+        width: 1%;
+        height: 6px;
+        background-color: rgba(0, 153, 102, 1);
+    }
+
+    #playBottom {
+        background-color: transparent;
+        border: none;
+    }
+
+    .mini-player {
+        background-color: white;
+        position: sticky;
+        width: 100%;
+        padding: 10px 15px 18px 5px;
+        box-shadow: 1px -3px 2px 7px #8888880f;
+        bottom:0;
+    }
+
+    }
+
+    .btn:hover {
+        color: #000000;
+    }
+
+    .header-image {
+        background: url("/img/art_all.svg");
+        background-position: center;
+        background-size: contain;
+        height: 55px;
+        background-repeat: no-repeat;
+        margin: auto;
+        text-align: center;
+    }
+
+    .surano {
+        margin: auto;
+        position: relative;
+        top: 30%;
+        color: #0A77B5;
+        font-size: 1rem;
+    }
+
+    main {
+        background-color: white;
+    }
+ 
+
+    @@media only screen and (max-width: 426px) {
+        .sName {
+            font-size: 11px;
+        }
+    }
+</style>
+
+
+@*<nav class="navbar navbar-default row mb-3" role="navigation">
+    <div class="col-1 text-end p-0">
+        <a asp-controller="Quran" asp-action="index"> <i class="fa fa-angle-left fa_custom nav-fa-size"></i></a>
+    </div>
+    <div class="col-10 mt-2">
+        <div class="text-center">
+            <img class='child inline-block-child' src="~/img/Header/quran.svg" />
+            <p class='child inline-block-child' style="font-family: NotoSansBengaliUI-Bold; font-size:18px;color:#ffffff">পবিত্র কুরআন</p>
+        </div>
+    </div>
+    <div class="col-1">
+    </div>
+</nav>*@
+<nav class="navbar navbar-light bg-light">
+    <div class="col-1 text-end">
+        <a asp-action="Index" asp-controller="Quran" class="navbar-brand ">
+
+            <i class="fa fa-angle-left"></i>
+        </a>
+    </div>
+    <div class="col-10 ">
+        <h5 class="m-0 text-center">
+            পবিত্র কুরআন
+        </h5>
+    </div>
+    <div class="col-1">
+    </div>
+</nav>
+<div class="bismillah">
+    <img src="~/images/quran/bismillah.svg" style="width: 100%;" />
+</div>
+
+<div id="DetailPartial" style="margin-top: 20px;">
+</div>
+
+<input type="hidden" id="suraName" value='@ViewBag.name' />
+<input type="hidden" id="suraNo" value='@ViewBag.num' />
+
+
+
+@section scripts{
+
+    <script>
+        
+
+    var theAudio = new Audio();
+       $(document).ready(function () 
+       { 
+           LoadSuraDetail();
+
+        $('.tobng').each(function () {
+
+            var currentElement = $(this);
+
+            var value = currentElement.html().trim(); // if it is an input/select/textarea field
+            currentElement.html(convertToBanglanumber(value));
+            // TODO: do something with the value
+        });
+
+        var suraId = $('#suraId').val();
+        var suraPlay = $('#playMedia').val();
+
+        if(suraPlay=="1"){
+            play(suraId);
+        }
+    });
+
+
+
+
+    function convertToBanglanumber(input) {
+
+        var finalEnlishToBanglaNumber =
+            { '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪', '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯' };
+        var retStr = input;
+        for (var x in finalEnlishToBanglaNumber) {
+            retStr = retStr.replace(new RegExp(x, 'g'), finalEnlishToBanglaNumber[x]);
+        }
+
+
+        retStr = retStr.replace("AM", "এএম");
+        retStr = retStr.replace("PM", "পিএম");
+        return retStr;
+
+
+    }
+
+        function play(id) {
+            
+            var aaa = theAudio.paused;
+
+            if (theAudio.paused && theAudio.src == "") {
+
+                theAudio.src = "http://mygp.ibadat.co/audio/"+id+".mp3";
+                theAudio.play();
+                $('#playMedia').val(1);
+                $('#play-img').hide();
+                $('#pause-img').show();
+
+            }
+            else if (!theAudio.paused && theAudio.src != ""){
+                theAudio.pause();
+                $('#playMedia').val(0);
+                    $('#pause-img').hide();
+                   $('#play-img').show();
+
+            }
+
+            else if (theAudio.paused && theAudio.src != "") {
+                theAudio.play();
+                $('#playMedia').val(1);
+                 $('#play-img').hide();
+                $('#pause-img').show();
+            }
+            else {
+                theAudio.play();
+
+                $('#playMedia').val(1);
+                 $('#play-img').hide();
+                $('#pause-img').show();
+            }
+
+
+
+            setInterval(getPlayStatus ,400 );
+        }
+        function Seek() {
+           
+            var seek = $('#player').val();
+            var totalTime = theAudio.duration
+
+            var currnetTime = (totalTime * parseFloat(seek)) / 100;
+            $('#player').val(currnetTime);
+            theAudio.currentTime = currnetTime;
+        }
+        function getPlayStatus() {
+            var totalTime = theAudio.duration
+            var x = theAudio.currentTime;
+            $('#player').val((100 * x) / (totalTime));
+            $('#player').css("background-size", (100 * x) / (totalTime)+"%");
+            $('#player').css("background-image", "linear-gradient(#0A77B5, #0A77B5)");
+
+          
+        }
+
+        function LoadSuraDetail() 
+        {
+
+            $.ajax({
+                type: "GET",
+                async: true,
+                //url: "/Quran/SuraDetailData",
+                url: "@Url.Action("SuraDetailData", "Quran")",
+                data: {
+                    id: '@ViewBag.id',
+                    name: $('#suraName').val(),
+                    num: $('#suraNo').val(),
+                    play: '@ViewBag.play'
+                },
+                dataType: "html",
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $('#DetailPartial').empty();
+                    $('#DetailPartial').html(data);
+                    var suraId = $('#suraId').val();
+                    var suraPlay = $('#playMedia').val();
+
+                    if (suraPlay == "1") {
+                        play(suraId);
+                    }
+
+                    $('.tobng').each(function () {
+                        var currentElement = $(this);
+                        var value = currentElement.html().trim(); // if it is an input/select/textarea field
+                        currentElement.html(convertToBanglanumber(value));
+                    });
+                }
+            });
+        }
+
+
+        function goNext() {
+            
+            var play = $('#playMedia').val();
+            var id = $('#suraId').val();
+            //window.location.href = "/quran/DetailsOperation?id=" + id + "&op=next&play=" + play + "";
+            window.location.href = "@Url.Action("DetailsOperation", "Quran")?id=" + id + "&op=next&play=" + play + "";
+        }
+
+        function goPrev() {
+            var id = $('#suraId').val();
+            var play = $('#playMedia').val();
+            //window.location.href = "/Quran/DetailsOperation?id=" + id + "&op=prev&play=" + play+"";
+            window.location.href = "@Url.Action("DetailsOperation", "Quran")?id=" + id + "&op=next&play=" + play + "";
+        }
+
+
+        $(window).scroll(function (e) {
+           
+            var newPos = window.scrollY;
+            if (newPos > 80) {
+                $('#mini').css( "top" , "0");
+            }
+            else if (newPos < 80) {
+                $('#mini').css("top", " 63px");
+            }
+            else {
+                $('#mini').css({ "top": "19" });
+            }
+            
+        });
+
+    </script>
+
+   
+}
+

@@ -1,0 +1,180 @@
+﻿@{
+    //ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAstha.cshtml";
+}
+<style>
+    main {
+        background-color: #F8F8F8;
+        height: 100%;
+    }
+
+    #topDiv {
+        height: 100%;
+        background-color: white;
+    }
+
+    body {
+        background-color: white;
+    }
+
+    .borderBoxCard {
+        width: 100%;
+        background-color: #0A77B5;
+        background-image: url(images/landing/bg.svg);
+        /*background: url("images/landing/bg.svg");*/
+        height: 100%;
+        border-radius: 12px;
+        text-align: center;
+        color: white;
+        background-size: cover;
+    }
+
+    .mTxt {
+        font-size: 16px;
+        margin-top: 20px;
+        font-weight: 500;
+    }
+
+    .innerRow {
+        margin-right: 10px;
+        margin-left: 10px;
+        min-height: 30%;
+    }
+
+    .postionDiv {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        width: 100%;
+    }
+
+    @@media only screen and (max-width: 320px) {
+
+        .mTxt {
+            font-size: 14px;
+        }
+    }
+
+    /*     .postionDiv {
+                position: absolute;
+                top: 20%;
+                bottom: 25%;
+                left: 25%;
+                right: 25%
+            }*/
+
+</style>
+
+<nav class="navbar navbar-light" style="font-weight: 700; background: white;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="~/images/landing/backnavbutton.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
+            Astha Islamic
+        </a>
+    </div>
+</nav>
+
+<div class="row innerRow">
+    <div class="col-6 p-2" style="position:relative">
+        <a asp-action="index" asp-controller="Quran">
+            <div class="borderBoxCard">
+                <div class="postionDiv">
+                    <img src="~/images/landing/quran.svg" />
+                    <p class="mTxt">পবিত্র কুরআন</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-6 p-2" style="position:relative">
+        <a asp-action="index" asp-controller="Dua">
+
+            <div class="borderBoxCard">
+                <div class="postionDiv">
+                    <img src="~/images/landing/dua.svg" />
+                    <p class="mTxt">দোয়া সমূহ</p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="row innerRow">
+    <div class="col-6 p-2" style="position:relative">
+        <a asp-action="Index" asp-controller="Hadith">
+            <div class="borderBoxCard">
+                <div class="postionDiv">
+                    <img src="~/images/landing/hadith.svg" />
+                    <p class="mTxt">হাদিস সমূহ</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-6 p-2" style="position:relative">
+        <a asp-action="index" asp-controller="Ramadan">
+            <div class="borderBoxCard">
+                <div class="postionDiv">
+                    <img src="~/images/landing/ramadan.svg" />
+                    <p class="mTxt">রোজার সময়সূচী</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+</div>
+<div class="row innerRow">
+    <div class="col-6 p-2" style="position:relative">
+        <a asp-action="index" asp-controller="Zakat">
+            <div class="borderBoxCard">
+                <div class="postionDiv">
+                    <img src="~/images/landing/zakat.svg" />
+                    <p class="mTxt">যাকাত</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-6 p-2" style="position:relative">
+        <a asp-action="Index" asp-controller="NamesOfAllah">
+            <div class="borderBoxCard">
+                <div class="postionDiv">
+                    <img src="~/images/landing/namesofallah.svg" />
+                    <p class="mTxt">আল্লাহর ৯৯ টি নাম</p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="row innerRow">
+    <div class="col-6 p-2" style="position:relative">
+        <a asp-action="index" asp-controller="PrayerTime">
+            <div class="borderBoxCard">
+                <div class="postionDiv">
+                    <img src="~/images/landing/payeartime.svg" />
+                    <p class="mTxt">
+                        নামাজের সময়
+                    </p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-6 p-2" style="position:relative">
+        <a asp-action="index" asp-controller="IslamicName">
+            <div class="borderBoxCard">
+                <div class="postionDiv">
+                    <img src="~/images/landing/islamicname.svg" />
+                    <p class="mTxt">
+                        ইসলামিক নাম
+                    </p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+<footer class="border-top footer text-muted">
+    <div class="container" style="margin: auto; width: 100%;">
+        <div class="footer" style="text-align:center;">
+            <img src="~/images/footer/footer.svg" style="width:100%" />
+        </div>
+    </div>
+</footer>
+
+

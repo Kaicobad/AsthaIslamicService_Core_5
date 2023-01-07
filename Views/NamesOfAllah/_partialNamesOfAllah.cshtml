@@ -1,0 +1,101 @@
+﻿@model IEnumerable<AsthaIslamicService.Models.NameOfAllahViewModel>
+@{
+    int rCount = 0;
+}
+
+<div class="mt-4">
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        @if (Model != null)
+        {
+            foreach (var x in Model)
+            {
+                rCount = @rCount + 1;
+
+                <div class="accordion-item cardBoxCustom accordionCL">
+                    <div class="accordion-header">
+                        <button class="accordion-button collapsed  px-2"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#flush-@x.Id"
+                        aria-expanded="false"
+                        aria-controls="flush-@x.Id"
+                        onclick="AudioPlay('@x.Id', this)">
+                            <div class="col-3 p-2">
+                                <div class="header-image">
+                                    <p class="surano tobng">@rCount</p>
+
+                                </div>
+                            </div>
+                            <div class="col-7 p-0 col-middle ">
+                                <div class="row py-2">
+
+                                    <div class="col-12 padding ">@x.Name</div>
+
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                    <div id="flush-@x.Id" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body" id="accrd_@x.Id">
+
+                            <div style="padding:10px; padding: 10px; text-align: center; font-weight: bold; font-size: 20px">
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <img class="img-fluid" src="https://nagad.islamicservice.net/img/@x.ImageUrl" />
+                                    </div>
+
+
+                                    <div class="row ">
+
+                                        <div class="col-12 mt-3">
+
+                                            <p>অর্থ: @x.Meaning</p>
+                                            @* <p>ফজিলত: @x.Fazilat</p>*@
+
+                                        </div>
+                                        @* <div class="col-12 mt-3">
+
+                                <p>ফজিলত: @x.Fazilat</p>
+
+                                </div>*@
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        }
+
+
+
+    </div>
+</div>
+
+
+
+<script>
+    $('.tobng').each(function () {
+        var currentElement = $(this);
+        var value = currentElement.html().trim(); // if it is an input/select/textarea field
+        currentElement.html(convertToBanglanumber(value));
+
+    });
+
+
+    var AudioObject = new Audio();
+    function AudioPlay(id, element) {
+        var elmClasslist = element.className.split(' ');
+        // check div collapsed or not
+        var check = elmClasslist.filter(word => word == 'collapsed');
+
+        id = id.length == 1 ? ("0" + id + ".mp3") : (id + ".mp3");
+        AudioObject.src = "https://nagad.islamicservice.net/nameAudio/" + id;
+
+        if (check.length == 0) {
+            AudioObject.play();
+        }
+    }
+</script>

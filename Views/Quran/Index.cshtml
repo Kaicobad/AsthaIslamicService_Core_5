@@ -1,0 +1,149 @@
+﻿@{
+    ViewData["Title"] = "কুরআন";
+    Layout = "~/Views/Shared/_LayoutIslamicLife.cshtml";
+}
+
+<style>
+
+    .surano {
+        margin: auto;
+        position: relative;
+        top: 30%;
+        color: #E0B11A;
+        font-size: 1rem;
+    }
+
+    .col-middle {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .header-image {
+        /*background: url("/img/art_all.svg");*/
+        background-image: url(images/hadith/hadithnumberimg.svg);
+        background-position: center;
+        background-size: contain;
+        height: 55px;
+        background-repeat: no-repeat;
+        margin: auto;
+        text-align: center;
+    }
+
+    a:hover {
+        text-decoration: none;
+        color: #0A77B5;
+    }
+
+</style>
+
+
+<nav class="navbar navbar-light bg-light">
+    <div class="col-1 text-end">
+        <a asp-action="Index" asp-controller="Landing" class="navbar-brand ">
+
+            <i class="fa fa-angle-left"></i>
+        </a>
+    </div>
+    <div class="col-10 ">
+        <h5 class="m-0 text-center">
+            পবিত্র কুরআন
+        </h5>
+    </div>
+    <div class="col-1">
+    </div>
+</nav>
+
+
+
+<div class="" id="QuranPartial">
+</div>
+
+@*
+    @{
+    var suraList = (List<Sura>)ViewBag.SuraList;
+    }
+    @foreach (var x in suraList)
+    {
+    <a class="row cstmBoxCard no-style mt-3" asp-controller="quran" asp-action="details" asp-route-id="@x.SuraNo" asp-route-name="@x.SuraName" asp-route-num="@x.AyatNo">
+    <div class="col-3 pt-2 pb-2">
+    <div class="header-image">
+
+
+    @if (x.SuraNo.Length == 1)
+    {
+    <p class="surano tobng"> <span>0</span>@x.SuraNo</p>
+    }
+    else
+    {
+    <p class="surano tobng">@x.SuraNo</p>
+    }
+    </div>
+
+    </div>
+    <div class="col-7 col-middle">
+    <div class="row">
+    <div class="col-12 padding">@x.SuraName</div>
+    <div class="col-12 padding" style="font-size: 11px">আয়াত সংখ্যা - @x.AyatNo</div>
+    </div>
+    </div>
+    <div class="col-2 col-middle">
+    <i class="fa fa-angle-right more"></i>
+    </div>
+
+    </a>
+    }
+*@
+
+
+
+<script>
+       $(document).ready(function () {
+           LoadSura();
+
+        $('.tobng').each(function () {
+            var currentElement = $(this);
+            var value = currentElement.html().trim(); // if it is an input/select/textarea field
+            currentElement.html(convertToBanglanumber(value));
+        });
+    });
+
+
+
+    function convertToBanglanumber(input) {
+
+        var finalEnlishToBanglaNumber =
+            { '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪', '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯' };
+        var retStr = input;
+        for (var x in finalEnlishToBanglaNumber) {
+            retStr = retStr.replace(new RegExp(x, 'g'), finalEnlishToBanglaNumber[x]);
+        }
+
+
+        retStr = retStr.replace("AM", "এএম");
+        retStr = retStr.replace("PM", "পিএম");
+        return retStr;
+
+
+    }
+
+            function LoadSura() {
+            $.ajax({
+                type: "GET",
+                async: true,
+                //url: "quran/GetSuraList",
+                url: "@Url.Action("GetSuraList", "Quran")",
+                dataType: "html",
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $('#QuranPartial').empty();
+                    $('#QuranPartial').html(data);
+
+        $('.tobng').each(function () {
+            var currentElement = $(this);
+            var value = currentElement.html().trim(); // if it is an input/select/textarea field
+            currentElement.html(convertToBanglanumber(value));
+        });
+                }
+            });
+        }
+</script>

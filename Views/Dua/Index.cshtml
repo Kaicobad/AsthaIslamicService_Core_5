@@ -1,0 +1,260 @@
+﻿@{
+    ViewData["Title"] = "দোয়া";
+    Layout = "~/Views/Shared/_LayoutIslamicLife.cshtml";
+}
+
+<style>
+
+    /*.surano {
+        margin: auto;
+        position: relative;
+        top: 30%;
+        color: #E0B11A;
+        font-size: 1rem;
+    }
+
+    .col-middle {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .nav-link.active {
+        color: #2d99b5;
+        background-color: #2d99b5;
+        border-color: #dee2e6 #dee2e6 #fff;
+    }
+
+    .header-image {
+        background: url(images/hadith/hadithnumberimg.svg);
+        background-position: center;
+        background-size: contain;
+        height: 55px;
+        background-repeat: no-repeat;
+        margin: auto;
+        text-align: center;
+    }
+
+    a:hover {
+        text-decoration: none;
+        color: #129AE8;
+    }
+
+
+    .accordion-item {
+        background-color: #fff;
+    }
+
+
+    .cardBoxCustom {
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        box-shadow: 0px 0px 4px #888888;
+    }
+
+    .accordion-button {
+        padding: 0.5rem 1rem;
+    }
+
+        .accordion-button::after {
+            margin: auto;
+        }
+
+    .accordion-flush .accordion-item {
+        border-radius: 12px;
+    }
+
+        .accordion-flush .accordion-item .accordion-button {
+            border-radius: 12px;
+        }*/
+    .surano {
+        margin: auto;
+        position: relative;
+        top: 25%;
+        color: #E0B11A;
+        font-size: 1rem;
+    }
+
+    .col-middle {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .nav-link.active {
+        color: #2d99b5;
+        background-color: #2d99b5;
+        border-color: #dee2e6 #dee2e6 #fff;
+    }
+
+    .header-image {
+        background: url("images/hadith/hadithnumberimg.svg");
+        background-position: center;
+        background-size: contain;
+        height: 40px;
+        background-repeat: no-repeat;
+        margin: auto;
+        text-align: center;
+    }
+
+    a:hover {
+        text-decoration: none;
+        color: #129AE8;
+    }
+
+    .accordion-item {
+        background-color: #fff;
+    }
+
+    .cardBoxCustom {
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        box-shadow: 0px 0px 4px #888888;
+    }
+
+    .accordion-button {
+        padding: 0.5rem 1rem;
+    }
+
+        .accordion-button::after {
+            margin: auto;
+        }
+
+    .accordion-flush .accordion-item {
+        border-radius: 6px;
+    }
+
+        .accordion-flush .accordion-item .accordion-button {
+            border-radius: 6px;
+        }
+
+    .just-line-break {
+        white-space: pre-line;
+    }
+
+    main {
+        background-color: rgba(248, 248, 248, 1);
+    }
+</style>
+
+@*<nav class="navbar navbar-default row mb-3" role="navigation">
+    <div class="col-1 text-end p-0">
+        <a asp-controller="Landing" asp-action="index"> <i class="fa fa-angle-left fa_custom nav-fa-size"></i></a>
+    </div>
+    <div class="col-10 mt-2">
+        <div class="text-center" style="margin-top:3px">
+            <img class='child inline-block-child' src="~/img/Header/doa.svg" />
+            <p class='child inline-block-child' style="margin-left: 5px;font-family: NotoSansBengaliUI-Bold; font-size:18px;color:#ffffff">দোয়া সমূহ</p>
+        </div>
+    </div>
+    <div class="col-1">
+    </div>
+</nav>*@
+<nav class="navbar navbar-light bg-light">
+    <div class="col-1 text-end">
+        <a asp-action="Index" asp-controller="Landing" class="navbar-brand ">
+
+            <i class="fa fa-angle-left "></i>
+        </a>
+    </div>
+    <div class="col-10 ">
+        <h5 class="m-0 text-center">
+            দোয়া সমূহ
+        </h5>
+    </div>
+    <div class="col-1">
+    </div>
+</nav>
+
+<div id="duaPartial">
+</div>
+
+@*   <div class="mt-4">
+    @if (duaList.Count > 0)
+    {
+    foreach (var x in duaList)
+    {
+    <a class="row cstmBoxCard px-2" asp-controller="dua" asp-action="details" asp-route-id="@x.Id">
+    <div class="col-3  pt-2 pb-2">
+    <div class="header-image">
+    <p class="surano tobng">@x.Id</p>
+    </div>
+
+    </div>
+    <div class="col-7 col-middle pt-2 pb-2">
+    <div class="row">
+
+    <div class="col-12 padding" >@x.Title</div>
+    </div>
+    </div>
+    <div class="col-2 col-middle">
+    <i class="fa fa-angle-right more"></i>
+    </div>
+
+    </a>
+
+
+    }
+    }
+    </div>*@
+
+
+
+<script>
+    $(document).ready(function () {
+
+
+
+        LoadDua()
+    });
+
+
+
+    function convertToBanglanumber(input) {
+
+        var finalEnlishToBanglaNumber =
+            { '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪', '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯' };
+        var retStr = input;
+        for (var x in finalEnlishToBanglaNumber) {
+            retStr = retStr.replace(new RegExp(x, 'g'), finalEnlishToBanglaNumber[x]);
+        }
+
+
+        retStr = retStr.replace("AM", "এএম");
+        retStr = retStr.replace("PM", "পিএম");
+        return retStr;
+
+
+    }
+
+
+    function LoadDua() {
+        $.ajax({
+            type: "GET",
+            async: true,
+            //url: "/dua/GetDuaList",
+            url: "@Url.Action("GetDuaList", "Dua")",
+            dataType: "html",
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $('#duaPartial').empty();
+                $('#duaPartial').html(data);
+
+                $('.tobng').each(function () {
+                    var currentElement = $(this);
+                    var value = currentElement.html().trim(); // if it is an input/select/textarea field
+                    currentElement.html(convertToBanglanumber(value));
+                });
+            }
+        });
+
+        $('.tobng').each(function () {
+
+            var currentElement = $(this);
+
+            var value = currentElement.html().trim(); // if it is an input/select/textarea field
+            currentElement.html(convertToBanglanumber(value));
+            // TODO: do something with the value
+        });
+    }
+</script>

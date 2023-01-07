@@ -1,0 +1,43 @@
+﻿@using System.Threading;
+@using AsthaIslamicService.ViewModels;
+
+@{
+    Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("bn-BD");
+}
+@if (ViewBag.RamadanTime == null)
+{
+}
+else
+{
+    var data = (RTDivisionWiseViewModel)ViewBag.RamadanTime;
+    if (data.data.Count > 0)
+    {
+
+        int count = 1;
+        foreach (var item in data.data)
+        {
+            string clName = "";
+            if(count <= 10)
+            {
+                clName = "rahmatHV";
+            }
+            if(count>=11 && count <= 20)
+            {
+                clName = "magfiratHV"; 
+            }
+            if(count>=21 && count <= 31)
+            {
+                clName = "najatHV"; 
+            }
+
+            <tr class="@clName">
+                <td class="tobng ">@count</td>
+                <td class="tobng date" id="@count">@Convert.ToDateTime(item.ramadaDate).ToString("dd MMM")</td>
+                <td class="tobng sehriTime" id="@count.ToString()_sehri">@item.sehri</td>
+                <td class="tobng iftarTime" id="@count.ToString()_ifter">@item.iftar</td>
+                <td style="display:none" id="@count.ToString()_ttt"  >@Convert.ToDateTime(item.ramadaDate).ToLongDateString()</td>
+            </tr>
+            count++;
+        }
+    }
+}

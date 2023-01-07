@@ -1,0 +1,511 @@
+﻿@model AsthaIslamicService.Models.ZakatModel
+@{
+
+    Layout = "~/Views/Shared/_LayoutIslamicLife.cshtml";
+    ViewBag.Title = "যাকাত";
+}
+
+<style>
+    label {
+        background-color: transparent;
+        color: #000000;
+        margin: auto;
+        justify-content: left;
+        text-align: left;
+    }
+
+    .surano {
+        margin: auto;
+        position: relative;
+        top: 38%;
+        color: #129AE8;
+        font-size: 1rem;
+    }
+
+    .col-middle {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .list-row {
+        border: 1px solid rgba(0,0,0,.125);
+        border-radius: 0.25rem;
+        box-shadow: inset 0 8px 8px -7px rgb(0 0 0 / 20%), inset 0 -8px 8px -8px rgb(0 0 0 / 20%);
+        margin-bottom: 15px;
+    }
+
+    .nav-link.active {
+        color: #2d99b5;
+        background-color: #2d99b5;
+        border-color: #dee2e6 #dee2e6 #fff;
+    }
+
+    .header-image {
+        background: url("/img/art_all.svg");
+        background-position: center;
+        background-size: contain;
+        height: 93px;
+        background-repeat: no-repeat;
+        margin: auto;
+        text-align: center;
+    }
+
+    a:hover {
+        text-decoration: none;
+        color: #0A77B5;
+    }
+
+    pre {
+        text-align: left;
+        white-space: pre-wrap;
+        font-size: 12px;
+    }
+
+    .zakat-button {
+        color: #ffffff;
+        background-color: #0A77B5;
+        width: 100%;
+    }
+
+    .col-6 {
+        margin: auto;
+    }
+
+    .zakat-info {
+        background-color: #0A77B5;
+        border-radius: 8px;
+        padding: 20px 10px;
+        margin-top: 10px;
+        margin-left: 1%;
+        margin-right: 1%;
+        color: white;
+    }
+
+    .csCutomPaddingleft {
+        padding-left: 8px;
+    }
+
+    .csNgMargintop {
+        margin-top: -10px;
+    }
+</style>
+
+<nav class="navbar navbar-light bg-light">
+    <div class="col-1 text-end">
+        <a class="navbar-brand" asp-action="Index" asp-controller="Landing">
+
+            <i class="fa fa-angle-left "></i>
+        </a>
+    </div>
+    <div class="col-10 ">
+        <h5 class="m-0 text-center">
+            যাকাত
+        </h5>
+    </div>
+    <div class="col-1">
+    </div>
+</nav>
+
+
+
+@{
+    ZakatModel item = ViewBag.ZakatRecord;
+    if (item != null)
+    {
+        double total = (item.Cash +
+        item.CashInBankaccount +
+        item.ValueOfGold +
+        item.ValueOfSilver +
+        item.StockMarketInvestment +
+        item.OtherInvestments +
+        item.HouseRent +
+        item.Property +
+        item.CashInBusiness +
+        item.Products +
+        item.Pension +
+        item.OtherCapital +
+        item.Agriculture) - (item.CreditCardPayment + item.CarPayment + item.BusinessPayment + item.FamilyLoan + item.OtherLoans + item.FamilyLoansAndOthers);
+
+        double zakatAmount = 0;
+        if (total > 0)
+        {
+            zakatAmount = (Convert.ToDouble(2.5) * total) / 100;
+
+        }
+
+        <div class="zakat-info">
+
+            <div class="row m-0">
+                <div class="col-12" style="text-align:center">
+                    <span style="font-size:14px ;font-weight: 600" class="text-right">মোট সম্পদ  <span style="font-weight:800">:</span></span>
+                    <span style="font-weight: 600" class="tobng"> @total</span>
+                </div>
+            </div>
+            <div class="row m-0">
+                <div class="col-12" style="text-align:center">
+                    <span style="font-weight: 600; font-size: 15px;color:rgba(234, 222, 127, 1)" class="text-right">যাকাত বাকী <span style="font-weight:800">:</span></span>
+                    <span style="color:rgba(234, 222, 127, 1);font-weight: 600" class="tobng"> @zakatAmount.ToString("#,##0.0")</span>
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+    }
+
+
+}
+
+<div style="padding-bottom:1px;margin-top:15px" class="px-2">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal mt-2">
+
+
+
+
+
+
+            <div class="col-12">
+                <p style="font-size:14px;margin-left: 6px;">
+                    চন্দ্র বছরে আপনার দখলে থাকা সমস্ত সম্পদের পরিমান প্রবেশ করুন:
+                </p>
+                <h3 style="color:rgba(30, 61, 46, 1); font-size:16px;font-weight:700;margin-left:6px">নগদ টাকা</h3>
+            </div>
+
+            <div style="background-color:#FFFFFF" class="pt-2 pb-2">
+
+                <div class="row csNgMargintop">
+                    <div class="col-6 csCutomPaddingleft">
+                        <label style="font-size:14px;">নগদ টাকা</label>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <span class="sym-taka"></span>
+                            <input type="text" style="height:30px" name="Cash" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row csNgMargintop">
+                    <div class="col-6 csCutomPaddingleft">
+                        <label style="font-size:14px"> ব্যাংক অ্যাকাউন্টে নগদ টাকা</label>
+                    </div>
+                    <div class="col-6">
+
+                        <div class="input-group">
+                            <span class="sym-taka"></span>
+                            <input type="text" style="height:30px" name="CashInBankaccount" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-12 mt-2">
+                <h3 style="color:rgba(30, 61, 46, 1); font-size:16px;font-weight:700;margin-left:6px">স্বর্ণের সমতুল্য টাকার পরিমান  </h3>
+            </div>
+
+            <div style="background-color:#FFFFFF" class="pt-2 pb-2">
+
+                <div class="row csNgMargintop">
+                    <div class="col-6 csCutomPaddingleft">
+                        <label style="font-size:14px">স্বর্ণ</label>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <span class="sym-taka"></span>
+                            <input type="text" style="height:30px" name="ValueOfGold" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row csNgMargintop">
+                    <div class="col-6 csCutomPaddingleft">
+                        <label style="font-size:14px"> রুপা</label>
+                    </div>
+                    <div class="col-6">
+
+                        <div class="input-group">
+                            <span class="sym-taka"></span>
+                            <input type="text" style="height:30px" name="ValueOfSilver" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        </div>
+                        @* *@
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="col-12 mt-2">
+                <h3 style="color:rgba(30, 61, 46, 1); font-size:16px;font-weight:700;margin-left:6px">বিনিয়োগ </h3>
+            </div>
+
+            <div style="background-color:#FFFFFF" class="pt-2 pb-2">
+
+                <div class="row csNgMargintop">
+                    <div class="col-6 csCutomPaddingleft">
+                        <label style="font-size:14px">শেয়ার বাজার</label>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <span class="sym-taka"></span>
+                            <input type="text" style="height:30px" name="StockMarketInvestment" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row csNgMargintop">
+                    <div class="col-6 csCutomPaddingleft">
+                        <label style="font-size:14px">অন্যান্য বিনিয়োগ</label>
+                    </div>
+                    <div class="col-6">
+
+                        <div class="input-group">
+                            <span class="sym-taka"></span>
+                            <input type="text" style="height:30px" name="OtherInvestments" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        </div>
+                        @* *@
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="col-12 mt-2">
+                <h3 style="color:rgba(30, 61, 46, 1); font-size:16px;font-weight:700;margin-left:6px">সম্পত্তি </h3>
+            </div>
+
+            <div style="background-color:#FFFFFF" class="pt-2 pb-2">
+
+                <div class="row csNgMargintop">
+                    <div class="col-6 csCutomPaddingleft">
+                        <label style="font-size:14px">বাসা ভাড়া </label>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <span class="sym-taka"></span>
+                            <input type="text" style="height:30px" name="HouseRent" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row csNgMargintop">
+                    <div class="col-6 csCutomPaddingleft">
+                        <label style="font-size:14px">সম্পত্তি</label>
+                    </div>
+                    <div class="col-6">
+
+                        <div class="input-group">
+                            <span class="sym-taka"></span>
+                            <input type="text" style="height:30px" name="Property" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12 mt-2">
+                <h3 style="color:rgba(30, 61, 46, 1); font-size:16px;font-weight:700;margin-left:6px">ব্যবসা </h3>
+            </div>
+
+            <div style="background-color:#FFFFFF" class="pt-2 pb-2">
+
+                <div class="row csNgMargintop">
+                    <div class="col-6 csCutomPaddingleft">
+                        <label style="font-size:14px">নগদ ব্যবসা </label>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <span class="sym-taka"></span>
+                            <input type="text" style="height:30px" name="CashInBusiness" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row csNgMargintop">
+                    <div class="col-6 csCutomPaddingleft">
+                        <label style="font-size:14px">পণ্য</label>
+                    </div>
+                    <div class="col-6">
+
+                        <div class="input-group">
+                            <span class="sym-taka"></span>
+                            <input type="text" style="height:30px" name="Products" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12 mt-2">
+                <h3 style="color:rgba(30, 61, 46, 1); font-size:16px;font-weight:700;margin-left:6px">অন্যান্য </h3>
+            </div>
+
+            <div style="background-color:#FFFFFF" class="pt-2 pb-2">
+
+                <div class="row csNgMargintop">
+                    <div class="col-6 csCutomPaddingleft">
+                        <label style="font-size:14px">পেনশন </label>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <span class="sym-taka"></span>
+                            <input type="text" style="height:30px" name="Pension" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row csNgMargintop">
+                    <div class="col-6 csCutomPaddingleft">
+                        <label style="font-size:14px">পারিবারিক ঋণ এবং অন্যান্য</label>
+                    </div>
+                    <div class="col-6">
+
+                        <div class="input-group">
+                            <span class="sym-taka"></span>
+                            <input type="text" style="height:30px" name="FamilyLoansAndOthers" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row csNgMargintop">
+                    <div class="col-6 csCutomPaddingleft">
+                        <label style="font-size:14px">অন্যান্য মূলধন</label>
+                    </div>
+                    <div class="col-6">
+
+                        <div class="input-group">
+                            <span class="sym-taka"></span>
+                            <input type="text" style="height:30px" name="OtherCapital" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12 mt-2">
+                <h3 style="color:rgba(30, 61, 46, 1); font-size:16px;font-weight:700;margin-left:6px">কৃষিকাজ </h3>
+            </div>
+
+            <div style="background-color:#FFFFFF" class="pt-2 pb-2">
+
+                <div class="row csNgMargintop">
+                    <div class="col-6 csCutomPaddingleft">
+                        <label style="font-size:14px">টাকার পরিমান  </label>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <span class="sym-taka"></span>
+                            <input type="text" style="height:30px" name="Agriculture" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+            <div class="col-12 mt-2">
+                <h3 style="color:rgba(250, 62, 62, 1); font-size:18px;margin-left:6px;font-weight: bold;">দায় </h3>
+            </div>
+
+            <div style="background-color:#FFFFFF" class="pt-2 pb-2">
+
+                <div class="row csNgMargintop">
+                    <div class="col-6 csCutomPaddingleft">
+                        <label style="font-size:14px">ক্রেডিট কার্ড পেমেন্ট </label>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <span class="sym-taka"></span>
+                            <input type="text" style="height:30px" name="CreditCardPayment" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row csNgMargintop">
+                    <div class="col-6 csCutomPaddingleft">
+                        <label style="font-size:13px">গাড়ির পেমেন্ট</label>
+                    </div>
+                    <div class="col-6">
+
+                        <div class="input-group">
+                            <span class="sym-taka"></span>
+                            <input type="text" style="height:30px" name="CarPayment" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row csNgMargintop">
+                    <div class="col-6 csCutomPaddingleft">
+                        <label style="font-size:14px">ব্যবসার পেমেন্ট</label>
+                    </div>
+                    <div class="col-6">
+
+                        <div class="input-group">
+                            <span class="sym-taka"></span>
+                            <input type="text" style="height:30px" name="BusinessPayment" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row csNgMargintop">
+                    <div class="col-6 csCutomPaddingleft">
+                        <label style="font-size:14px">ফ্যামিলি ঋণ</label>
+                    </div>
+                    <div class="col-6">
+
+                        <div class="input-group">
+                            <span class="sym-taka"></span>
+                            <input type="text" style="height:30px" name="FamilyLoan" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row csNgMargintop">
+                    <div class="col-6 csCutomPaddingleft">
+                        <label style="font-size:14px">অন্যান্য ঋণ</label>
+                    </div>
+                    <div class="col-6">
+
+                        <div class="input-group">
+                            <span class="sym-taka"></span>
+                            <input type="text" style="height:30px" name="OtherLoans" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            @*<div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn  btn-block mt-3 save-btn btn-primary" style="width:100%">হিসাব করুন</button>
+
+                </div>
+            </div>*@
+            <div class="row form-group" style="width:100%">
+                <div class="col-12">
+                    <button type="submit" class="btn  btn-block mt-3 save-btn btn-primary" style="width:100%; background:#0A77B5;">হিসাব করুন</button>
+                </div>
+            </div>
+
+        </div>
+       @* <div class="row form-group" style="width:100%">
+            <div class="col-12">
+                <a asp-action="new" asp-controller="zakat" class="btn btn-md btn-block text-center zakat-button">নতুন হিসাব</a>
+                <button type="submit" class="btn  btn-block mt-3 save-btn btn-primary" style="width:100%">হিসাব করুন</button>
+            </div>
+        </div>*@
+    }
+
+</div>

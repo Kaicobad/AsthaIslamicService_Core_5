@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "নামাজের সময়";
+    Layout = "~/Views/Shared/_LayoutIslamicLife.cshtml";
+}
+
+<style>
+
+    .bg-salah {
+        /*background-image: url('/img/salah_bg.png');*/
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 5px;
+        background-color: #0A77B5;
+    }
+
+    p {
+        margin: 0px;
+    }
+</style>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<nav class="navbar navbar-light bg-light">
+    <div class="col-1 text-end">
+        <a asp-action="Index" asp-controller="Landing" class="navbar-brand ">
+
+            <i class="fa fa-angle-left "></i>
+        </a>
+    </div>
+    <div class="col-10 ">
+        <h5 class="m-0 text-center">
+            নামাজের সময়
+        </h5>
+    </div>
+    <div class="col-1">
+    </div>
+</nav>
+
+<div class="row" id="partialView">
+</div>
+<script>
+       $(document).ready(function () {
+             LoadPartialView();
+       });
+
+           function LoadPartialView() {
+           $.ajax({
+               type: "GET",
+               async: true,
+               //url: "PrayerTime/GetPrayerTimeData",
+               url: "@Url.Action("GetPrayerTimeData", "PrayerTime")",
+               dataType: "html",
+               contentType: 'application/json; charset=utf-8',
+               success: function (data) {
+                   $('#partialView').empty();
+                   $('#partialView').html(data);
+
+
+               }
+           });
+
+       }
+</script>
