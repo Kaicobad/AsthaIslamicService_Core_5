@@ -238,7 +238,8 @@
 
 
     }
-    function LoadDiveWiseTiming(strDiv) {
+    function LoadDiveWiseTiming(strDiv) 
+    {
 
         $.ajax({
             type: "GET",
@@ -271,9 +272,8 @@
         });
     }
 
-    function getTodaysValue() {
-
-
+    function getTodaysValue() 
+    {
         var today = $('#todaysDate').val();
         var split = today.split(',');
 
