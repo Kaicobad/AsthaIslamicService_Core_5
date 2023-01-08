@@ -169,7 +169,7 @@
             সেহরি ও ইফতারের সময়সূচি
         </div>
 
-        <div class="row" style="margin-left:10px;margin-right:10px;margin-top:10px;">
+        @*<div class="row" style="margin-left:10px;margin-right:10px;margin-top:10px;">
             <div class="col-4 p-0">
                 <div class="borderBoxCard" id="rahmatCL" onclick="ToggleClick('rahmatCL','rahmatTxt','rahmatHV')">
                     <p class="rType" id="rahmatTxt">রহমত</p>
@@ -188,22 +188,20 @@
 
                 </div>
             </div>
-        </div>
+        </div>*@
         <div class="row">
             <table class="table table-border" style="margin-top:20px">
 
                 <thead>
                     <tr style="color:#1bb1af;vertical-align: middle;">
-                        <th style="font-size:13px;color:#5c5c5c">রমজান</th>
                         <th style="font-size:13px;color:#5c5c5c">তারিখ</th>
+                        <th style="font-size:13px;color:#5c5c5c">বার</th>
                         <th style="font-size:13px;color:#5c5c5c">সেহরির শেষ সময়</th>
                         <th style="font-size:13px;color:#5c5c5c">ইফতারের সময়</th>
                     </tr>
                 </thead>
                 <tbody id="tbldata" style="background-color:white">
                 </tbody>
-
-
             </table>
 
         </div>
@@ -234,8 +232,8 @@
         }
 
 
-        //retStr = retStr.replace("AM", "এএম");
-        //retStr = retStr.replace("PM", "পিএম");
+        retStr = retStr.replace("AM", "AM");
+        retStr = retStr.replace("PM", "PM");
         return retStr;
 
 

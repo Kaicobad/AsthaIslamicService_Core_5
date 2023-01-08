@@ -48,9 +48,9 @@ namespace AsthaIslamicService.Controllers
 
         public async Task<PartialViewResult> GetDivisionWise(string division)
         {
-            var ramadan = await ramadanService.GetDivsionWiseTime(division);
+            var ramadan = await ramadanService.RamadanTimeFromALAdhan(division);
             ViewBag.RamadanTime = ramadan;
-            return PartialView("raman_time");
+            return PartialView("ramdan_timeV2Partial");
         }
 
 
