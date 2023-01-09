@@ -33,8 +33,8 @@
                 </a>  
             </div>
             <div class="col-2 col-middle">
-                <img id="play" src="~/images/quran/play.svg" value="@item.Id" onclick="play()"/>
-                <img id="pause" src="~/images/quran/stop.svg" value="@item.Id" style="display: none;" onclick="pause()" />
+                <img id="play_@item.Id" src="~/images/quran/play.svg" value="@item.Id" onclick="play('@item.Id', this)" />
+                <img id="pause_@item.Id" src="~/images/quran/stop.svg" value="@item.Id" style="display: none;" onclick="pause()" />
             </div>
         </div>      
     }

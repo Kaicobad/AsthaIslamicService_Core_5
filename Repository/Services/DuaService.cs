@@ -27,9 +27,8 @@ namespace AsthaIslamicService.Repository.Services
                 var client = httpClientFactory.CreateClient("dua");
 
                 client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Add("Authorization", "base " + AppConstents.IbadatAuthentication());
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var url = string.Format("{0}/api/dua?msisdn=8801685&lang=bn", AppConstents.Ibadat_API);
+                var url = string.Format("{0}/api/Dua/Dua?msisdn=019&lang=bn", AppConstents.NOOR_API);
                 var httpResponse = await client.GetAsync(url);
                 if (httpResponse.IsSuccessStatusCode)
                 {
@@ -42,7 +41,6 @@ namespace AsthaIslamicService.Repository.Services
             }
             catch (Exception ex)
             {
-
                 throw;
             }
         }

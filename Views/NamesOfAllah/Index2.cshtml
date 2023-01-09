@@ -80,9 +80,7 @@
     }
 
     .cstmBoxCard{
-        width:100%;
         background: #FFFFFF;
-        box-shadow: 0px 4px 4px rgb(0 0 0 / 25%), 0px 4px 4px rgb(0 0 0 / 25%);
         border-radius: 4px;
     }
 
@@ -133,12 +131,13 @@
         }
 
 
-        function play()
+        function play(id,element)
         {
             //currentPlayingTrack.play();
-
-            $('#pause').show();
             $('#play').hide();
+            $('#pause').show();
+            AudioPlay(id,element);
+            
         };
 
         function pause() {
@@ -146,5 +145,24 @@
             $('#pause').hide();
             $('#play').show();
         };
+
+
+
+
+        var AudioObject = new Audio();
+        function AudioPlay(id, element) {
+            var elmClasslist = element.className.split(' ');
+            // check div collapsed or not
+            var check = elmClasslist.filter(word => word == 'collapsed');
+
+            id = id.length == 1 ? ("0" + id + ".mp3") : (id + ".mp3");
+            AudioObject.src = "https://nagad.islamicservice.net/nameAudio/" + id;
+
+            if (check.length == 0) {
+                AudioObject.play();
+                $('#play').show();
+            }
+
+        }
     </script>
 }
