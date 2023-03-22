@@ -1,4 +1,7 @@
-﻿@{
+﻿@using System.Threading;
+@using AsthaIslamicService.ViewModels;
+
+@{
     ViewData["Title"] = "রোজা";
     Layout = "~/Views/Shared/_LayoutIslamicLife.cshtml";
 }
@@ -145,6 +148,9 @@
 </nav>
 
 
+
+
+
 <div calss="hd" style="padding: 12px;">
     <div class="col-12 rmheader">
         <div class="row">
@@ -152,17 +158,19 @@
             <p class="text-center text-white tobng" style="font-size: 14px;">আজ @ViewBag.CurrentDate </p>
 
         </div>
+
+
         <div class="row" style="margin-top:0px ">
             <div class="col-5 p-0" style="margin: auto;text-align:center">
                 <p class="time-title2">সেহরীর শেষ সময়</p>
-                <p class="time-titleInside">রাত <span id="sehriTime" class="time-titleInside tobng">@ViewBag.fazar</span></p>
+                <p class="time-titleInside">রাত <span id="sehriTime" class="time-titleInside tobng">@ViewBag.fajrTime</span></p>
             </div>
             <div class="col-2" style="text-align:center">
                 <div class="vr" style="color: white;margin: auto;height: 100%;"><p style="font-size:50px;">|</p></div>
             </div>
             <div class="col-5 p-0" style="margin: auto;text-align:center">
                 <p class="time-title2">ইফতারের সময়</p>
-                <p class="time-titleInside">সন্ধ্যা  <span id="iftarTime" class="time-titleInside tobng">@ViewBag.sunset</span></p>
+                <p class="time-titleInside">সন্ধ্যা  <span id="iftarTime" class="time-titleInside tobng">@ViewBag.maghribTime</span></p>
             </div>
         </div>
     </div>
@@ -192,25 +200,25 @@
         </div>
 
         @*<div class="row" style="margin-left:10px;margin-right:10px;margin-top:10px;">
-            <div class="col-4 p-0">
-                <div class="borderBoxCard" id="rahmatCL" onclick="ToggleClick('rahmatCL','rahmatTxt','rahmatHV')">
-                    <p class="rType" id="rahmatTxt">রহমত</p>
+                <div class="col-4 p-0">
+                    <div class="borderBoxCard" id="rahmatCL" onclick="ToggleClick('rahmatCL','rahmatTxt','rahmatHV')">
+                        <p class="rType" id="rahmatTxt">রহমত</p>
 
+                    </div>
                 </div>
-            </div>
-            <div class="col-4 p-0">
-                <div class="borderBoxCard" id="magfiratCL" onclick="ToggleClick('magfiratCL','magfiratTxt','magfiratHV')">
-                    <p class="rType" id="magfiratTxt">মাগফিরাত</p>
+                <div class="col-4 p-0">
+                    <div class="borderBoxCard" id="magfiratCL" onclick="ToggleClick('magfiratCL','magfiratTxt','magfiratHV')">
+                        <p class="rType" id="magfiratTxt">মাগফিরাত</p>
 
+                    </div>
                 </div>
-            </div>
-            <div class="col-4 p-0">
-                <div class="borderBoxCard" id="najatCL" onclick="ToggleClick('najatCL','najatTxt','najatHV')">
-                    <p class="rType" id="najatTxt">নাজাত </p>
+                <div class="col-4 p-0">
+                    <div class="borderBoxCard" id="najatCL" onclick="ToggleClick('najatCL','najatTxt','najatHV')">
+                        <p class="rType" id="najatTxt">নাজাত </p>
 
+                    </div>
                 </div>
-            </div>
-        </div>*@
+            </div>*@
         <div class="row">
             <table class="table table-border" style="margin-top:20px">
 
@@ -260,7 +268,7 @@
 
 
     }
-    function LoadDiveWiseTiming(strDiv) 
+    function LoadDiveWiseTiming(strDiv)
     {
 
         $.ajax({
@@ -294,7 +302,7 @@
         });
     }
 
-    function getTodaysValue() 
+    function getTodaysValue()
     {
         var today = $('#todaysDate').val();
         var split = today.split(',');

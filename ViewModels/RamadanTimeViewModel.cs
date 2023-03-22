@@ -7,6 +7,9 @@ namespace AsthaIslamicService.ViewModels
     {
         public IDictionary<string, string> TimeEN { get; set; }
         public IDictionary<string, string> TimeBng { get; set; }
+        //add 22.3.23
+        public string Iftar { get; set; }
+        public string Seheri { get; set; }
         public DateTime TheDate { get; set; }
         public string DayNumber { get; set; }
     }

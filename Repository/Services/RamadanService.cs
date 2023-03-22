@@ -85,12 +85,51 @@ namespace AsthaIslamicService.Repository.Services
             }
         }
 
+        //public async Task<List<RamadanTimeViewModel>> RamadanTimeFromALAdhan(string city)
+        //{
+        //    string currentMonth = DateTime.Now.Month.ToString();
+        //    string currentYear = DateTime.Now.Year.ToString();
+
+        //    var client = new RestClient("http://api.aladhan.com/v1/calendarByCity?city=" + city + "&country=Bangladesh&method=9&month=" + currentMonth + "&year=" + currentYear + "&school=1");
+        //    client.Timeout = -1;
+        //    var request = new RestRequest(Method.GET);
+
+        //    IRestResponse response = client.Execute(request);
+
+        //    JsonDeserializer deserializer = new JsonDeserializer();
+        //    var jsonString = deserializer.Deserialize<dynamic>(response);
+        //    List<RamadanTimeViewModel> aList = new List<RamadanTimeViewModel>();
+        //    if (jsonString["code"] == 200)
+        //    {
+        //        var jsParse = jsonString["data"];
+        //        foreach (var item in jsParse)
+        //        {
+        //            RamadanTimeViewModel aDay = new RamadanTimeViewModel();
+        //            aDay.TheDate = Convert.ToDateTime(item["date"]["readable"]);
+        //            aDay.DayNumber = item["date"]["hijri"]["day"];
+
+        //            IDictionary<string, string> numberNamesEn = new Dictionary<string, string>();
+        //            numberNamesEn.Add("Fajr", TimeSpanToString12(item["timings"]["Fajr"].Replace("(+06)", "").Trim()));
+        //            numberNamesEn.Add("Dhuhr", TimeSpanToString12(item["timings"]["Dhuhr"].Replace("(+06)", "").Trim()));
+        //            numberNamesEn.Add("Asr", TimeSpanToString12(item["timings"]["Asr"].Replace("(+06)", "").Trim()));
+        //            numberNamesEn.Add("Maghrib", TimeSpanToString12(item["timings"]["Maghrib"].Replace("(+06)", "").Trim()));
+        //            numberNamesEn.Add("Isha", TimeSpanToString12(item["timings"]["Isha"].Replace("(+06)", "").Trim()));
+        //            aDay.TimeEN = numberNamesEn;
+        //            aList.Add(aDay);
+        //        }
+        //    }
+
+        //    return aList;
+        //}
+
+        //add 22.3.23
         public async Task<List<RamadanTimeViewModel>> RamadanTimeFromALAdhan(string city)
         {
             string currentMonth = DateTime.Now.Month.ToString();
             string currentYear = DateTime.Now.Year.ToString();
 
-            var client = new RestClient("http://api.aladhan.com/v1/calendarByCity?city=" + city + "&country=Bangladesh&method=9&month=" + currentMonth + "&year=" + currentYear + "&school=1");
+
+            var client = new RestClient("http://27.131.15.12:801/api/prayer/" + city + "/BD");
             client.Timeout = -1;
             var request = new RestRequest(Method.GET);
 
@@ -99,27 +138,23 @@ namespace AsthaIslamicService.Repository.Services
             JsonDeserializer deserializer = new JsonDeserializer();
             var jsonString = deserializer.Deserialize<dynamic>(response);
             List<RamadanTimeViewModel> aList = new List<RamadanTimeViewModel>();
-            if (jsonString["code"] == 200)
+            if (jsonString["status"] == 200)
             {
                 var jsParse = jsonString["data"];
                 foreach (var item in jsParse)
                 {
                     RamadanTimeViewModel aDay = new RamadanTimeViewModel();
-                    aDay.TheDate = Convert.ToDateTime(item["date"]["readable"]);
-                    aDay.DayNumber = item["date"]["hijri"]["day"];
 
-                    IDictionary<string, string> numberNamesEn = new Dictionary<string, string>();
-                    numberNamesEn.Add("Fajr", TimeSpanToString12(item["timings"]["Fajr"].Replace("(+06)", "").Trim()));
-                    numberNamesEn.Add("Dhuhr", TimeSpanToString12(item["timings"]["Dhuhr"].Replace("(+06)", "").Trim()));
-                    numberNamesEn.Add("Asr", TimeSpanToString12(item["timings"]["Asr"].Replace("(+06)", "").Trim()));
-                    numberNamesEn.Add("Maghrib", TimeSpanToString12(item["timings"]["Maghrib"].Replace("(+06)", "").Trim()));
-                    numberNamesEn.Add("Isha", TimeSpanToString12(item["timings"]["Isha"].Replace("(+06)", "").Trim()));
-                    aDay.TimeEN = numberNamesEn;
+                    aDay.TheDate = Convert.ToDateTime(item["ramadaDate"]);
+                    aDay.DayNumber = item["ramadaDay"];
+                    aDay.Iftar = item["iftar"];
+                    aDay.Seheri = item["sehri"];
                     aList.Add(aDay);
                 }
             }
 
             return aList;
+
         }
         private string TimeSpanToString12(string input)
         {
