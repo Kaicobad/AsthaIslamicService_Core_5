@@ -15,8 +15,8 @@
         foreach (var item in aList)
         {
 
-            var Fajr = item.TimeEN["Fajr"];
-            var Maghrib = item.TimeEN["Maghrib"];
+           // var Fajr = item.TimeEN["Fajr"];
+            //var Maghrib = item.TimeEN["Maghrib"];
             if (item.TheDate.ToString("dd-MMM-yyyy") == DateTime.Now.ToString("dd-MMM-yyyy"))
             {
                 active = "date-active";
@@ -31,8 +31,8 @@
 
                     <td class="tobng timeValue date">@item.TheDate.Day</td>
                     <td>@item.TheDate.ToString("dddd")</td>
-                    <td id="@count.ToString()_sheri" class="tobng sehriTime">@Fajr</td>
-                    <td id="@count.ToString()_iftar" class="tobng iftarTime">@Maghrib</td>
+                    <td id="@count.ToString()_sheri" class="tobng sehriTime">@item.Seheri</td>
+                    <td id="@count.ToString()_iftar" class="tobng iftarTime">@item.Iftar</td>
                     <td style="display:none" id="@count.ToString()_ttt">@Convert.ToDateTime(item.TheDate).ToLongDateString()</td>
 
                 </tr>

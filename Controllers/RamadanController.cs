@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 using System.Threading;
+using System.Linq;
 
 namespace AsthaIslamicService.Controllers
 {
@@ -27,6 +28,7 @@ namespace AsthaIslamicService.Controllers
             Thread.CurrentThread.CurrentCulture = new CultureInfo("bn-BD");
             ViewBag.CurrentDate = DateTime.Now.ToLongDateString();
             var data = await prayerTimeService.GetPrayerTime();
+            var ramadandata = await ramadanService.RamadanTimeFromALAdhan("Dhaka");
             if (data != null)
             {
                 data.data.timings.Fajr = Convert.ToDateTime(data.data.timings.Fajr).ToString("t");
@@ -40,10 +42,30 @@ namespace AsthaIslamicService.Controllers
             }
             ViewBag.fazar = Convert.ToDateTime(data.data.timings.Fajr).ToString("t");
             ViewBag.sunset = Convert.ToDateTime(data.data.timings.Sunset).ToString("t");
+            //add 22.3.23
+            var ramadan = await ramadanService.RamadanTimeFromALAdhan("Dhaka");
+            ViewBag.RamadanTime = ramadan;
+            DateTime today = DateTime.Today;
 
+			if (today < new DateTime(2023, 3, 24) || today > new DateTime(2023, 4, 22))
+			{
 
-            //return View("ramadanV2");
-            return View();
+				ViewBag.fajrTime = "00:00";
+				ViewBag.maghribTime = "00:00";
+
+			}
+			else
+			{
+				var ramadanTimeToday = ramadandata.FirstOrDefault(d => d.TheDate.Day == today.Day);
+
+				if (ramadanTimeToday != null)
+				{
+					ViewBag.fajrTime = ramadanTimeToday.Seheri;
+                    ViewBag.maghribTime = ramadanTimeToday.Iftar;
+				}
+			}
+			//return View("ramadanV2");
+			return View();
         }
 
         public async Task<PartialViewResult> GetDivisionWise(string division)
