@@ -42,16 +42,6 @@ namespace AsthaIslamicService.Controllers
             }
             ViewBag.fazar = Convert.ToDateTime(data.data.timings.Fajr).ToString("t");
             ViewBag.sunset = Convert.ToDateTime(data.data.timings.Sunset).ToString("t");
-            //add 22.3.23
-            var ramadan = await ramadanService.RamadanTimeFromALAdhan("Dhaka");
-            ViewBag.RamadanTime = ramadan;
-            DateTime today = DateTime.Today;
-
-			if (today < new DateTime(2023, 3, 24) || today > new DateTime(2023, 4, 22))
-			{
-
-				ViewBag.fajrTime = "00:00";
-				ViewBag.maghribTime = "00:00";
 
 			}
 			else
