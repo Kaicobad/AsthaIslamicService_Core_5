@@ -17,9 +17,9 @@ namespace AsthaIslamicService.Controllers
         private readonly IRamadanService ramadanService;
         private readonly IPrayerTimeService prayerTimeService;
 
-        public RamadanController( IRamadanService ramadanService,IPrayerTimeService prayerTimeService)
+        public RamadanController(IRamadanService ramadanService, IPrayerTimeService prayerTimeService)
         {
-           
+
             this.ramadanService = ramadanService;
             this.prayerTimeService = prayerTimeService;
         }
@@ -43,29 +43,31 @@ namespace AsthaIslamicService.Controllers
             ViewBag.fazar = Convert.ToDateTime(data.data.timings.Fajr).ToString("t");
             ViewBag.sunset = Convert.ToDateTime(data.data.timings.Sunset).ToString("t");
             //add 22.3.23
-            var ramadan = await ramadanService.RamadanTimeFromALAdhan("Dhaka");
+            var ramadan = await ramadanService.RamadanTimeFromALAdhan("Dahka");
             ViewBag.RamadanTime = ramadan;
             DateTime today = DateTime.Today;
 
-			if (today < new DateTime(2023, 3, 24) || today > new DateTime(2023, 4, 22))
-			{
+            if (today < new DateTime(2023, 3, 24) || today > new DateTime(2023, 4, 22))
+            {
 
-				ViewBag.fajrTime = "00:00";
-				ViewBag.maghribTime = "00:00";
+                ViewBag.fajrTime = "00:00";
+                ViewBag.maghribTime = "00:00";
 
-			}
-			else
-			{
-				var ramadanTimeToday = ramadandata.FirstOrDefault(d => d.TheDate.Day == today.Day);
+            }
+            else
+            {
+                var ramadanTimeToday = ramadandata.FirstOrDefault(d => d.TheDate.Date == today);
 
-				if (ramadanTimeToday != null)
-				{
-					ViewBag.fajrTime = ramadanTimeToday.Seheri;
+                if (ramadanTimeToday != null)
+                {
+                    ViewBag.fajrTime = ramadanTimeToday.Seheri;
                     ViewBag.maghribTime = ramadanTimeToday.Iftar;
-				}
-			}
-			//return View("ramadanV2");
-			return View();
+                }
+            }
+
+
+            //return View("ramadanV2");
+            return View();
         }
 
         public async Task<PartialViewResult> GetDivisionWise(string division)
@@ -83,4 +85,5 @@ namespace AsthaIslamicService.Controllers
             return PartialView("ramdan_timeV2Partial");
         }
     }
+
 }
