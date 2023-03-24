@@ -176,7 +176,7 @@
     </div>
 </div>
 
-<div class="row todays-wrap">
+@*<div class="row todays-wrap">
     <div class="col-12 text-center" style="margin-top:12px">
         <select id="divValues" class="selectOPtion" onchange="LoadDiveWiseTiming(this.value)">
             <option value="Dhaka">ঢাকা</option>
@@ -190,6 +190,22 @@
         </select>
 
     </div>
+</div>*@
+
+<div>
+    <select id="cityDropdown" class="form-select dropdown-toggle form-select-lg mb-3" aria-haspopup="true" aria-expanded="false" style="margin-top: 10px;">
+
+        <option value="Dhaka">ঢাকা</option>
+        <option value="Barisal">বরিশাল</option>
+        <option value="Chattogram">চট্টগ্রাম</option>
+        <option value="Khulna">খুলনা</option>
+        <option value="Mymensingh">ময়মনসিংহ</option>
+        <option value="Rajshahi">রাজশাহী</option>
+        <option value="Rangpur">রংপুর</option>
+        <option value="Sylhet">সিলেট</option>
+
+    </select>
+
 </div>
 
 
@@ -243,8 +259,15 @@
 <script>
 
     $(document).ready(function () {
-
         LoadDiveWiseTiming('Dhaka');
+
+
+        $('#cityDropdown').on('change', function () {
+            debugger;
+            var selectedCity = $(this).val();
+            LoadDiveWiseTiming(selectedCity);
+        });
+
         $('.tobng').each(function () {
             var currentElement = $(this);
             var value = currentElement.html().trim(); // if it is an input/select/textarea field
@@ -262,23 +285,18 @@
         }
 
 
-        retStr = retStr.replace("AM", "AM");
-        retStr = retStr.replace("PM", "PM");
+        retStr = retStr.replace("AM", "");
+        retStr = retStr.replace("PM", "");
         return retStr;
 
 
     }
     function LoadDiveWiseTiming(strDiv)
     {
-
         $.ajax({
             type: "GET",
-            async: false,
-            //url: "ramadan/GetDivisionWise",
-            url: "@Url.Action("GetDivisionWise", "Ramadan")",
-            data: {
-                division: strDiv
-            },
+            async: true,
+            url: "/ramadan/GetRamadanTimingV2?city=" + strDiv,
             dataType: "html",
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
@@ -294,40 +312,78 @@
                     currentElement.html(convertToBanglanumber(value));
                     // TODO: do something with the value
                 });
-                getTodaysValue();
             },
             complete: function () {
+                getTodaysValue();
 
             }
         });
+
+        //$.ajax({
+        //    type: "GET",
+        //    async: false,
+        //    //url: "ramadan/GetDivisionWise",
+        //    url: "@Url.Action("GetDivisionWise", "Ramadan")",
+        //    data: {
+        //        division: strDiv
+        //    },
+        //    dataType: "html",
+        //    contentType: 'application/json; charset=utf-8',
+        //    success: function (data) {
+        //        $('#tbldata').empty();
+        //        $('#tbldata').html(data);
+
+
+        //        $('.tobng').each(function () {
+
+        //            var currentElement = $(this);
+
+        //            var value = currentElement.html().trim(); // if it is an input/select/textarea field
+        //            currentElement.html(convertToBanglanumber(value));
+        //            // TODO: do something with the value
+        //        });
+        //        getTodaysValue();
+        //    },
+        //    complete: function () {
+
+        //    }
+        //});
     }
 
-    function getTodaysValue()
-    {
-        var today = $('#todaysDate').val();
-        var split = today.split(',');
+    //function getTodaysValue()
+    //{
+    //    var today = $('#todaysDate').val();
+    //    var split = today.split(',');
 
-        $('.date').each(function () {
+    //    $('.date').each(function () {
 
-            var data = $(this).attr('id');
+    //        var data = $(this).attr('id');
 
-            var date = $('#' + data + '_ttt').html();
+    //        var date = $('#' + data + '_ttt').html();
 
-            if (date == today) {
-                $('#sehriTime').text($('#' + data + "_sehri").html());
-                $('#iftarTime').text($('#' + data + "_ifter").html());
+    //        if (date == today) {
+    //            $('#sehriTime').text($('#' + data + "_sehri").html());
+    //            $('#iftarTime').text($('#' + data + "_ifter").html());
 
-                if (parseInt(data) > 10 && parseInt(data) <= 20) {
-                    ToggleClick('magfiratCL', 'magfiratTxt', 'magfiratHV');
-                }
-                else if (parseInt(data) > 20) {
-                    ToggleClick('najatCL', 'najatTxt', 'najatHV');
-                }
-                return;
-                /* $('#' + data + "").html();*/
-            }
+    //            if (parseInt(data) > 10 && parseInt(data) <= 20) {
+    //                ToggleClick('magfiratCL', 'magfiratTxt', 'magfiratHV');
+    //            }
+    //            else if (parseInt(data) > 20) {
+    //                ToggleClick('najatCL', 'najatTxt', 'najatHV');
+    //            }
+    //            return;
+    //            /* $('#' + data + "").html();*/
+    //        }
 
-        });
+    //    });
+    //}
+    function getTodaysValue() {
+        $('#sehriTime').text($('#1_sheri').html());
+        $('#iftarTime').text($('#1_iftar').html());
+        //$('#1_tr').css("background-color", "#E2136E");
+        //$('#1_tr').css("color", "white");
+        $('.btSection').show();
+
     }
 
 

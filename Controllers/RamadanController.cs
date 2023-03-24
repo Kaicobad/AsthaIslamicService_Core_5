@@ -14,49 +14,68 @@ namespace AsthaIslamicService.Controllers
     public class RamadanController : Controller
     {
 
-        private readonly IRamadanService ramadanService;
-        private readonly IPrayerTimeService prayerTimeService;
+        private readonly IRamadanService _ramadanService;
 
-        public RamadanController(IRamadanService ramadanService, IPrayerTimeService prayerTimeService)
+        public RamadanController(IRamadanService ramadanService)
         {
 
-            this.ramadanService = ramadanService;
-            this.prayerTimeService = prayerTimeService;
+            _ramadanService = ramadanService;
         }
         public async Task<IActionResult> Index()
         {
+            //Thread.CurrentThread.CurrentCulture = new CultureInfo("bn-BD");
+            //ViewBag.CurrentDate = DateTime.Now.ToLongDateString();
+            //var data = await prayerTimeService.GetPrayerTime();
+            //var ramadandata = await ramadanService.RamadanTimeFromALAdhan("Dhaka");
+            //if (data != null)
+            //{
+            //    data.data.timings.Fajr = Convert.ToDateTime(data.data.timings.Fajr).ToString("t");
+            //    data.data.timings.Dhuhr = Convert.ToDateTime(data.data.timings.Dhuhr).ToString("t");
+            //    data.data.timings.Asr = Convert.ToDateTime(data.data.timings.Asr).ToString("t");
+            //    data.data.timings.Sunset = Convert.ToDateTime(data.data.timings.Sunset).ToString("t");
+            //    data.data.timings.Maghrib = Convert.ToDateTime(data.data.timings.Maghrib).ToString("t");
+            //    data.data.timings.Isha = Convert.ToDateTime(data.data.timings.Isha).ToString("t");
+            //    data.data.timings.Imsak = Convert.ToDateTime(data.data.timings.Imsak).ToString("t");
+            //    data.data.timings.Midnight = Convert.ToDateTime(data.data.timings.Midnight).ToString("t");
+            //}
+            //ViewBag.fazar = Convert.ToDateTime(data.data.timings.Fajr).ToString("t");
+            //ViewBag.sunset = Convert.ToDateTime(data.data.timings.Sunset).ToString("t");
+            ////add 22.3.23
+            //var ramadan = await ramadanService.RamadanTimeFromALAdhan("Dhaka");
+            //ViewBag.RamadanTime = ramadan;
+            //DateTime today = DateTime.Today;
+
+            //if (today < new DateTime(2023, 3, 24) || today > new DateTime(2023, 4, 22))
+            //{
+
+            //    ViewBag.fajrTime = "00:00";
+            //    ViewBag.maghribTime = "00:00";
+
+            //}
+            //else
+            //{
+            //    var ramadanTimeToday = ramadandata.FirstOrDefault(d => d.TheDate.Date == today);
+
+            //    if (ramadanTimeToday != null)
+            //    {
+            //        ViewBag.fajrTime = ramadanTimeToday.Seheri;
+            //        ViewBag.maghribTime = ramadanTimeToday.Iftar;
+            //    }
+            //}
+
             Thread.CurrentThread.CurrentCulture = new CultureInfo("bn-BD");
             ViewBag.CurrentDate = DateTime.Now.ToLongDateString();
-            var data = await prayerTimeService.GetPrayerTime();
-            var ramadandata = await ramadanService.RamadanTimeFromALAdhan("Dhaka");
-            if (data != null)
-            {
-                data.data.timings.Fajr = Convert.ToDateTime(data.data.timings.Fajr).ToString("t");
-                data.data.timings.Dhuhr = Convert.ToDateTime(data.data.timings.Dhuhr).ToString("t");
-                data.data.timings.Asr = Convert.ToDateTime(data.data.timings.Asr).ToString("t");
-                data.data.timings.Sunset = Convert.ToDateTime(data.data.timings.Sunset).ToString("t");
-                data.data.timings.Maghrib = Convert.ToDateTime(data.data.timings.Maghrib).ToString("t");
-                data.data.timings.Isha = Convert.ToDateTime(data.data.timings.Isha).ToString("t");
-                data.data.timings.Imsak = Convert.ToDateTime(data.data.timings.Imsak).ToString("t");
-                data.data.timings.Midnight = Convert.ToDateTime(data.data.timings.Midnight).ToString("t");
-            }
-            ViewBag.fazar = Convert.ToDateTime(data.data.timings.Fajr).ToString("t");
-            ViewBag.sunset = Convert.ToDateTime(data.data.timings.Sunset).ToString("t");
-            //add 22.3.23
-            var ramadan = await ramadanService.RamadanTimeFromALAdhan("Dhaka");
-            ViewBag.RamadanTime = ramadan;
+            var data = await _ramadanService.RamadanTimeFromALAdhan("Dhaka");
             DateTime today = DateTime.Today;
 
             if (today < new DateTime(2023, 3, 24) || today > new DateTime(2023, 4, 22))
             {
-
                 ViewBag.fajrTime = "00:00";
                 ViewBag.maghribTime = "00:00";
-
             }
             else
             {
-                var ramadanTimeToday = ramadandata.FirstOrDefault(d => d.TheDate.Date == today);
+                var ramadanTimeToday = data.FirstOrDefault(d => d.TheDate.Date == today);
 
                 if (ramadanTimeToday != null)
                 {
@@ -66,21 +85,22 @@ namespace AsthaIslamicService.Controllers
             }
 
 
+
             //return View("ramadanV2");
             return View();
         }
 
         public async Task<PartialViewResult> GetDivisionWise(string division)
         {
-            var ramadan = await ramadanService.RamadanTimeFromALAdhan(division);
+            var ramadan = await _ramadanService.RamadanTimeFromALAdhan(division);
             ViewBag.RamadanTime = ramadan;
             return PartialView("ramdan_timeV2Partial");
         }
 
 
-        public async Task<PartialViewResult> GetRamadanTimingV2()
+        public async Task<PartialViewResult> GetRamadanTimingV2(string city)
         {
-            var ramadan = await ramadanService.RamadanTimeFromALAdhan("Dahka");
+            var ramadan = await _ramadanService.RamadanTimeFromALAdhan(city);
             ViewBag.RamadanTime = ramadan;
             return PartialView("ramdan_timeV2Partial");
         }

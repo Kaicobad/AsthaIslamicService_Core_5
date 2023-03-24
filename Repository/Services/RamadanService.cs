@@ -131,6 +131,29 @@ namespace AsthaIslamicService.Repository.Services
 
             var client = new RestClient("http://27.131.15.12:801/api/prayer/" + city + "/BD");
             client.Timeout = -1;
+            //var request = new RestRequest(Method.GET);
+
+            //IRestResponse response = client.Execute(request);
+
+            //JsonDeserializer deserializer = new JsonDeserializer();
+            //var jsonString = deserializer.Deserialize<dynamic>(response);
+            //List<RamadanTimeViewModel> aList = new List<RamadanTimeViewModel>();
+            //if (jsonString["status"] == 200)
+            //{
+            //    var jsParse = jsonString["data"];
+            //    foreach (var item in jsParse)
+            //    {
+            //        RamadanTimeViewModel aDay = new RamadanTimeViewModel();
+
+            //        aDay.TheDate = Convert.ToDateTime(item["ramadaDate"]);
+            //        aDay.DayNumber = item["ramadaDay"];
+            //        aDay.Iftar = item["iftar"];
+            //        aDay.Seheri = item["sehri"];
+            //        aList.Add(aDay);
+            //    }
+            //}
+
+            //return aList;
             var request = new RestRequest(Method.GET);
 
             IRestResponse response = client.Execute(request);
