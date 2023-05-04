@@ -234,7 +234,8 @@
 
 <script>
 
-    $(document).ready(function () {
+    $(document).ready(function () 
+    {
 
         LoadDiveWiseTiming('Dhaka');
         $('.tobng').each(function () {
@@ -273,12 +274,12 @@
             },
             dataType: "html",
             contentType: 'application/json; charset=utf-8',
-            success: function (data) {
+            success: function (data) 
+            {
                 $('#tbldata').empty();
                 $('#tbldata').html(data);
-
-
-                $('.tobng').each(function () {
+                $('.tobng').each(function () 
+                {
 
                     var currentElement = $(this);
 

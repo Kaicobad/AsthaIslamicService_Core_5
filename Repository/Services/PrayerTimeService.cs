@@ -72,7 +72,6 @@ namespace AsthaIslamicService.Repository.Services
             }
         }
         public async Task<PrayerTime> GetPrayerTime()
-
         {
             string latitude = "23.7808875";
             string longitude = "90.2792366";

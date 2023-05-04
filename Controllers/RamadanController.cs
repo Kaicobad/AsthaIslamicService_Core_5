@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 using System.Threading;
+using System.Linq;
 
 namespace AsthaIslamicService.Controllers
 {
@@ -38,8 +39,19 @@ namespace AsthaIslamicService.Controllers
                 data.data.timings.Imsak = Convert.ToDateTime(data.data.timings.Imsak).ToString("t");
                 data.data.timings.Midnight = Convert.ToDateTime(data.data.timings.Midnight).ToString("t");
             }
-            ViewBag.fazar = Convert.ToDateTime(data.data.timings.Fajr).ToString("t");
-            ViewBag.sunset = Convert.ToDateTime(data.data.timings.Sunset).ToString("t");
+            var ramadan = await ramadanService.RamadanTimeFromALAdhan("Dhaka");
+            for (int i = 0; i < ramadan.Count; i++)
+            {
+                if (ramadan[i].TheDate == DateTime.Now.Date)
+                {
+                    var salat = ramadan[i].TimeEN;
+                    var list = salat.Values.ToList();
+                    ViewBag.fazar = list[0];
+                    ViewBag.sunset = list[3];
+                }  
+            }
+            //ViewBag.fazar = Convert.ToDateTime(data.data.timings.Fajr).ToString("t");
+            //ViewBag.sunset = Convert.ToDateTime(data.data.timings.Sunset).ToString("t");
 
 
             //return View("ramadanV2");
