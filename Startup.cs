@@ -42,6 +42,7 @@ namespace AsthaIslamicService
             services.AddScoped<IDuaCacheManager, DuaCacheManager>();
             services.AddScoped<IDuaService, DuaService>();
             services.AddScoped<IIslamicNameService, IslamicNameService>();
+            services.AddScoped<ISSOservice, SSOservice>();
             services.AddHttpClient<TokenService>();
         }
 

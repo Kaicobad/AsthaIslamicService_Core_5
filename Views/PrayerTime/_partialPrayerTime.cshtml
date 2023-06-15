@@ -7,12 +7,36 @@
 
     </div>
 </div>
+<div class="suntimes">
+    <div class="row gx-2">
+        <div class="col" style="text-align:center">
+            <div class="p-3" style="background-color:#0A77B5; border-radius:5px; color:#ffffff">
+                <div>
+                    সূর্যোদয়
+                </div>
+                <div class="tobng">
+                    @ViewBag.sunriseTime
+                </div>
+            </div>
+        </div>
+        <div class="col" style="text-align:center">
+            <div class="p-3" style="background-color:#0A77B5; border-radius:5px; color:#ffffff">
+                <div>
+                    সূর্যাস্ত
+                </div>
+                <div class="tobng">
+                    @ViewBag.sunSetTime
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row my-3">
     <select class="py-2" id="ddlPlaces" onchange="getSelectedCityTime()">
         @*      <option value="0">--Select Country--</option>*@
     </select>
 </div>
-
+<div id="responseContainer"></div>
 <p class="my-3 text-center py-2 tobng" style="font-size:20px; background-color:#ffffff">@ViewBag.currentDate</p>
 <div class="container" id="prayerTime" style="padding: 2%">
     <div class="card mb-2 card-body">
@@ -132,6 +156,7 @@
             url: "@Url.Action("GetDefaultTime", "PrayerTime")",
             success: function (response) {
                 defaultTime = response;
+                $('#responseContainer').html(defaultTime.Sunrise);
             },
             failure: function (response) {
 

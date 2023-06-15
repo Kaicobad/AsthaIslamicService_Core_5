@@ -14,6 +14,7 @@
         public string asr { get; set; }
         public string magrib { get; set; }
         public string isha { get; set; }
+        public string Sunrise { get; set; }
         //public string tahajjut { get; set; }
         //public string ishraq { get; set; }
     }
