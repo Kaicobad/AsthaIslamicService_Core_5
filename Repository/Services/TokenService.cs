@@ -27,9 +27,9 @@ namespace AsthaIslamicService.Repository.Services
             {
                 LoginViewModel loginModel = new LoginViewModel
                 {
-                    Msisdn = "8801819509506",
+                    Msisdn = "8801926384856",
                     Password = "123456",
-                    UserName = ""
+                    UserName = "8801926384856"
                 };
 
                 var loginObj = new
@@ -39,7 +39,7 @@ namespace AsthaIslamicService.Repository.Services
                     MobileNumber = loginModel.Msisdn
                 };
 
-                var url = "http://118.67.219.130:801/api/account/loginmu";
+                var url = "http://27.131.15.12:801/api/account/loginmu";
 
                 string jsonString = JsonConvert.SerializeObject(loginObj);
                 var formContent = new FormUrlEncodedContent(new[]
