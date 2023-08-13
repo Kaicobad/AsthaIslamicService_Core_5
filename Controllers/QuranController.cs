@@ -22,8 +22,6 @@ namespace AsthaIslamicService.Controllers
 
         public async Task<IActionResult> Index()
         {
-            //List<Sura> aList = await _suraService.GetAll();
-            //ViewBag.SuraList = aList;
             return View();
         }
 
