@@ -131,12 +131,13 @@
 
 
 
-    function LoadPartialView() {
+    function LoadPartialView() 
+    {
         $.ajax({
             type: "GET",
             async: true,
-            //url: "Hadith/GetHadithData",
-            url: "@Url.Action("GetHadithData", "Hadith")",
+            url: "Hadith/GetHadithData",
+            //url: "@Url.Action("GetHadithData", "Hadith")",
             dataType: "html",
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
