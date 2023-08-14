@@ -47,6 +47,7 @@ namespace AsthaIslamicService.Repository.Services
             {
                 return textContents.data;
                 throw;
+
             }
         }
     }
